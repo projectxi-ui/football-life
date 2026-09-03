@@ -2413,3 +2413,14 @@ if (!player) {
 createExtraButtons();
 
 updateCalendarUI();
+/* =========================================
+   SCREEN SYSTEM — IMPORTANT
+========================================= */
+
+.screen {
+  display: none !important;
+}
+
+.screen.active {
+  display: block !important;
+}
