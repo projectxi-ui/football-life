@@ -1,275 +1,54 @@
-/* =========================================
-   PROJECT XI — FOOTBALL LIFE
-   VERSION 1
-========================================= */
+const SAVE_KEY = "projectXI_football_life_v2";
 
+let player = null;
+let club = null;
 
-/* =========================================
-   GAME DATA
-========================================= */
+const $ = id => document.getElementById(id);
 
-let player = {
-    name: "",
-    country: "",
-    position: "",
-    age: 17,
-
-    season: 1,
-
-    rating: 62,
-    fitness: 75,
-    happiness: 80,
-    money: 2000,
-    reputation: 10,
-
-    club: "PROJECT XI Academy",
-    clubStatus: "Youth Player",
-
-    goals: 0,
-    assists: 0,
-    trophies: 0,
-
-    careerEarnings: 0,
-
-    injured: false,
-    injuryWeeks: 0,
-
-    retired: false
+const screens = {
+    menu: $("menuScreen"),
+    start: $("startScreen"),
+    career: $("careerScreen"),
+    legacy: $("legacyScreen"),
+    club: $("clubScreen"),
+    owner: $("ownerScreen")
 };
 
 
-/* =========================================
-   DOM ELEMENTS
-========================================= */
-
-const startScreen = document.getElementById("startScreen");
-const careerScreen = document.getElementById("careerScreen");
-const legacyScreen = document.getElementById("legacyScreen");
-
-const playerNameInput = document.getElementById("playerName");
-const playerCountryInput = document.getElementById("playerCountry");
-const playerPositionInput = document.getElementById("playerPosition");
-const playerAgeInput = document.getElementById("playerAge");
-
-const startCareerBtn = document.getElementById("startCareerBtn");
-const startError = document.getElementById("startError");
-
-const displayName = document.getElementById("displayName");
-const displayDetails = document.getElementById("displayDetails");
-const playerAvatar = document.getElementById("playerAvatar");
-
-const seasonDisplay = document.getElementById("seasonDisplay");
-
-const ageStat = document.getElementById("ageStat");
-const ratingStat = document.getElementById("ratingStat");
-const fitnessStat = document.getElementById("fitnessStat");
-const happinessStat = document.getElementById("happinessStat");
-const moneyStat = document.getElementById("moneyStat");
-const reputationStat = document.getElementById("reputationStat");
-
-const clubName = document.getElementById("clubName");
-const clubStatus = document.getElementById("clubStatus");
-
-const eventText = document.getElementById("eventText");
-const careerLog = document.getElementById("careerLog");
-
-const trainBtn = document.getElementById("trainBtn");
-const matchBtn = document.getElementById("matchBtn");
-const lifeBtn = document.getElementById("lifeBtn");
-const ageUpBtn = document.getElementById("ageUpBtn");
-
-const saveBtn = document.getElementById("saveBtn");
-const menuBtn = document.getElementById("menuBtn");
-
-const createClubBtn = document.getElementById("createClubBtn");
-
-const legacyGoals = document.getElementById("legacyGoals");
-const legacyAssists = document.getElementById("legacyAssists");
-const legacyTrophies = document.getElementById("legacyTrophies");
-const legacyMoney = document.getElementById("legacyMoney");
-
-
-/* =========================================
-   UTILITY FUNCTIONS
-========================================= */
-
-function randomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
+/* ---------------- UTILITIES ---------------- */
 
 function clamp(value, min, max) {
     return Math.max(min, Math.min(max, value));
 }
 
-
-function formatMoney(amount) {
-    return "€" + Math.round(amount).toLocaleString();
+function random(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function money(value) {
+    return "€" + Math.floor(value).toLocaleString();
+}
 
 function showScreen(screen) {
-
-    startScreen.classList.remove("active");
-    careerScreen.classList.remove("active");
-    legacyScreen.classList.remove("active");
-
-    screen.classList.add("active");
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+    Object.values(screens).forEach(s => s.classList.add("hidden"));
+    screen.classList.remove("hidden");
 }
 
-
-/* =========================================
-   CAREER LOG
-========================================= */
-
-function addLog(message) {
+function addLog(text) {
+    if (!player) return;
 
     const entry = document.createElement("div");
-
     entry.className = "log-entry";
+    entry.innerHTML = text;
 
-    entry.innerHTML = `
-        <span class="log-year">
-            AGE ${player.age}
-        </span>
-
-        <p>${message}</p>
-    `;
-
-    careerLog.prepend(entry);
+    $("careerLog").prepend(entry);
 }
 
-
-/* =========================================
-   UPDATE UI
-========================================= */
-
-function updateUI() {
-
-    displayName.textContent = player.name;
-
-    displayDetails.textContent =
-        `${player.age} • ${player.position} • ${player.club}`;
-
-    playerAvatar.textContent =
-        player.name.substring(0, 2).toUpperCase();
-
-    seasonDisplay.textContent = player.season;
-
-    ageStat.textContent = player.age;
-    ratingStat.textContent = player.rating;
-    fitnessStat.textContent = player.fitness;
-    happinessStat.textContent = player.happiness;
-
-    moneyStat.textContent =
-        formatMoney(player.money);
-
-    reputationStat.textContent =
-        player.reputation;
-
-    clubName.textContent =
-        player.club;
-
-    clubStatus.textContent =
-        player.clubStatus;
-}
-
-
-/* =========================================
-   CREATE PLAYER
-========================================= */
-
-function createPlayer() {
-
-    const name = playerNameInput.value.trim();
-    const country = playerCountryInput.value.trim();
-
-    if (name.length < 2) {
-
-        startError.textContent =
-            "Please enter a player name.";
-
-        return;
-    }
-
-    if (country.length < 2) {
-
-        startError.textContent =
-            "Please enter your country.";
-
-        return;
-    }
-
-    startError.textContent = "";
-
-
-    player = {
-
-        name: name,
-        country: country,
-        position: playerPositionInput.value,
-        age: Number(playerAgeInput.value),
-
-        season: 1,
-
-        rating: randomNumber(58, 65),
-        fitness: randomNumber(70, 80),
-        happiness: randomNumber(75, 85),
-        money: 2000,
-        reputation: 10,
-
-        club: "PROJECT XI Academy",
-        clubStatus: "Youth Player",
-
-        goals: 0,
-        assists: 0,
-        trophies: 0,
-
-        careerEarnings: 0,
-
-        injured: false,
-        injuryWeeks: 0,
-
-        retired: false
-    };
-
-
-    careerLog.innerHTML = "";
-
-
-    addLog(
-        `You joined PROJECT XI Academy as a ${getPositionName(player.position)}. Your football journey begins.`
-    );
-
-
-    eventText.textContent =
-        "Your first season begins. Work hard, make smart decisions and build your future.";
-
-
-    updateUI();
-
-    showScreen(careerScreen);
-
-    saveCareer();
-}
-
-
-/* =========================================
-   POSITION NAME
-========================================= */
-
-function getPositionName(position) {
-
-    const positions = {
-
+function getPositionName(pos) {
+    const names = {
         ST: "Striker",
-        LW: "Left Winger",
-        RW: "Right Winger",
+        LW: "Left Wing",
+        RW: "Right Wing",
         CAM: "Attacking Midfielder",
         CM: "Central Midfielder",
         CDM: "Defensive Midfielder",
@@ -279,866 +58,1066 @@ function getPositionName(position) {
         GK: "Goalkeeper"
     };
 
-    return positions[position] || position;
+    return names[pos] || pos;
 }
 
 
-/* =========================================
-   TRAINING
-========================================= */
+/* ---------------- CUTSCENES ---------------- */
 
-function train() {
+let currentCutscene = null;
 
-    if (player.injured) {
+function playCutscene(location, title, text, callback) {
 
-        eventText.textContent =
-            `You are recovering from an injury. ${player.injuryWeeks} week(s) remaining.`;
+    currentCutscene = callback || null;
 
+    $("cutsceneLocation").textContent = location;
+    $("cutsceneTitle").textContent = title;
+    $("cutsceneText").textContent = text;
+
+    $("cutscene").classList.remove("hidden");
+}
+
+$("cutsceneNext").addEventListener("click", () => {
+
+    $("cutscene").classList.add("hidden");
+
+    if (currentCutscene) {
+        const callback = currentCutscene;
+        currentCutscene = null;
+        callback();
+    }
+});
+
+
+/* ---------------- UI ---------------- */
+
+function updateUI() {
+
+    if (!player) return;
+
+    $("displayName").textContent = player.name;
+
+    $("displayDetails").textContent =
+        `${player.age} • ${getPositionName(player.position)} • ${player.country}`;
+
+    $("seasonDisplay").textContent = player.season;
+
+    $("ageStat").textContent = player.age;
+    $("ratingStat").textContent = player.rating;
+    $("fitnessStat").textContent = player.fitness;
+    $("happinessStat").textContent = player.happiness;
+    $("moneyStat").textContent = money(player.money);
+    $("reputationStat").textContent = player.reputation;
+
+    $("clubName").textContent = player.club;
+    $("clubStatus").textContent = player.clubStatus;
+
+    $("playerAvatar").textContent =
+        player.name.substring(0, 2).toUpperCase();
+
+    $("topStatus").textContent =
+        player.retired ? "OWNER MODE" : "CAREER MODE";
+}
+
+
+/* ---------------- PLAYER CREATION ---------------- */
+
+$("startCareerBtn").addEventListener("click", () => {
+
+    const name = $("playerName").value.trim();
+    const country = $("playerCountry").value.trim();
+    const position = $("playerPosition").value;
+    const age = Number($("playerAge").value);
+
+    if (!name || !country) {
+        $("startError").textContent =
+            "Enter your player name and country.";
         return;
     }
 
+    player = {
+        name,
+        country,
+        position,
+        age,
 
-    const ratingGain = randomNumber(1, 3);
-    const fitnessChange = randomNumber(-5, 2);
+        season: 1,
 
-    player.rating =
-        clamp(player.rating + ratingGain, 1, 99);
+        rating: 58,
+        potential: random(70, 86),
 
-    player.fitness =
-        clamp(player.fitness + fitnessChange, 0, 100);
+        fitness: 76,
+        happiness: 80,
 
-    player.happiness =
-        clamp(player.happiness + randomNumber(-2, 2), 0, 100);
+        money: 2000,
+        reputation: 5,
 
+        club: "PROJECT XI Academy",
+        clubStatus: "Youth Player",
+
+        goals: 0,
+        assists: 0,
+
+        trophies: 0,
+
+        leagueTitles: 0,
+        goldenBoots: 0,
+        playerOfYear: 0,
+        ballonDor: 0,
+
+        careerEarnings: 0,
+
+        injured: false,
+        injuryWeeks: 0,
+
+        retired: false,
+
+        achievements: []
+    };
+
+    $("careerLog").innerHTML = "";
 
     addLog(
-        `You completed an intense training session. Rating +${ratingGain}.`
+        `<strong>Age ${player.age}</strong> — Your football journey begins at PROJECT XI Academy.`
     );
 
-
-    eventText.textContent =
-        `Great training session! Your rating increased by ${ratingGain}.`;
-
     updateUI();
+    saveGame();
 
-    saveCareer();
-}
+    showScreen(screens.career);
+
+    playCutscene(
+        "PROJECT XI ACADEMY",
+        "THE JOURNEY BEGINS",
+        `At ${player.age}, ${player.name} has one goal: become a professional footballer.`,
+        () => {
+            $("eventText").textContent =
+                "Your first season starts now. Nothing is guaranteed.";
+        }
+    );
+});
 
 
-/* =========================================
-   PLAY MATCH
-========================================= */
+/* ---------------- TRAINING ---------------- */
 
-function playMatch() {
+$("trainBtn").addEventListener("click", () => {
+
+    if (!player || player.retired) return;
 
     if (player.injured) {
-
-        eventText.textContent =
-            `You cannot play while injured. ${player.injuryWeeks} week(s) remaining.`;
-
+        $("eventText").textContent =
+            `You are recovering. ${player.injuryWeeks} week(s) remaining.`;
         return;
     }
-
 
     if (player.fitness < 25) {
-
-        eventText.textContent =
-            "You're too tired to play safely. Rest and recover first.";
-
+        $("eventText").textContent =
+            "You're too exhausted to train effectively.";
         return;
     }
 
+    const difficulty = random(1, 100);
 
-    player.fitness =
-        clamp(player.fitness - randomNumber(8, 15), 0, 100);
+    player.fitness -= random(5, 10);
+
+    if (difficulty <= 45) {
+
+        if (player.rating < player.potential) {
+            player.rating += 1;
+            player.rating = Math.min(player.rating, player.potential);
+            player.happiness = clamp(player.happiness + 2, 0, 100);
+
+            addLog(
+                `<strong>Training breakthrough.</strong> Your rating increased to ${player.rating}.`
+            );
+
+            $("eventText").textContent =
+                "A difficult training session paid off.";
+
+        } else {
+
+            player.happiness = clamp(player.happiness + 1, 0, 100);
+
+            addLog(
+                `<strong>Training.</strong> You maintained your level.`
+            );
+
+            $("eventText").textContent =
+                "You trained hard, but there was little room for improvement.";
+        }
+
+    } else if (difficulty <= 90) {
+
+        addLog(
+            `<strong>Training session.</strong> You worked hard but made no major breakthrough.`
+        );
+
+        $("eventText").textContent =
+            "Solid session. Keep working.";
+
+    } else {
+
+        player.fitness -= 8;
+
+        addLog(
+            `<strong>Bad training day.</strong> Fatigue caught up with you.`
+        );
+
+        $("eventText").textContent =
+            "The session was rough. You need recovery.";
+    }
+
+    player.fitness = clamp(player.fitness, 0, 100);
+
+    updateUI();
+    saveGame();
+});
 
 
-    const performance =
-        player.rating +
-        randomNumber(-15, 15);
+/* ---------------- MATCH ---------------- */
 
+$("matchBtn").addEventListener("click", () => {
+
+    if (!player || player.retired) return;
+
+    if (player.injured) {
+        $("eventText").textContent =
+            "You cannot play while injured.";
+        return;
+    }
+
+    if (player.fitness < 30) {
+        $("eventText").textContent =
+            "Your fitness is too low for a match.";
+        return;
+    }
+
+    player.fitness -= random(10, 18);
+
+    const performance = random(1, 100);
 
     let goals = 0;
     let assists = 0;
 
+    if (performance >= 92) {
+        goals = random(2, 3);
+        assists = random(0, 2);
+        player.reputation += 4;
 
-    if (player.position === "GK") {
+        addLog(
+            `<strong>Outstanding performance.</strong> ${goals} goal(s), ${assists} assist(s).`
+        );
 
-        if (performance > 75) {
-            assists = randomNumber(0, 1);
-        }
+        player.happiness = clamp(player.happiness + 5, 0, 100);
+
+    } else if (performance >= 70) {
+
+        goals = random(0, 1);
+        assists = random(0, 1);
+        player.reputation += 1;
+
+        addLog(
+            `<strong>Good match.</strong> ${goals} goal(s), ${assists} assist(s).`
+        );
+
+    } else if (performance <= 20) {
+
+        player.reputation = clamp(player.reputation - 2, 0, 100);
+        player.happiness = clamp(player.happiness - 3, 0, 100);
+
+        addLog(
+            `<strong>Difficult match.</strong> You struggled to make an impact.`
+        );
 
     } else {
 
-        if (performance > 55) {
-            goals = randomNumber(0, 2);
-        }
-
-        if (performance > 70) {
-            assists = randomNumber(0, 2);
-        }
+        addLog(
+            `<strong>Match completed.</strong> A quiet performance.`
+        );
     }
-
 
     player.goals += goals;
     player.assists += assists;
 
+    const pay = random(150, 500);
 
-    const matchPay =
-        randomNumber(200, 700);
+    player.money += pay;
+    player.careerEarnings += pay;
 
-    player.money += matchPay;
-    player.careerEarnings += matchPay;
+    $("eventText").textContent =
+        `Match complete. +${goals} goal(s), +${assists} assist(s).`;
+
+    checkAchievements();
+
+    updateUI();
+    saveGame();
+});
 
 
-    if (goals > 0 || assists > 0) {
+/* ---------------- LIFE ---------------- */
 
-        player.reputation =
-            clamp(
-                player.reputation +
-                goals +
-                assists,
-                0,
-                100
-            );
+$("lifeBtn").addEventListener("click", () => {
 
-        player.happiness =
-            clamp(
-                player.happiness + 3,
-                0,
-                100
-            );
+    if (!player || player.retired) return;
+
+    const choice = random(1, 4);
+
+    if (choice === 1) {
+
+        player.happiness = clamp(player.happiness + 8, 0, 100);
+
+        addLog(
+            `<strong>Family time.</strong> You spent the day with people close to you.`
+        );
+
+        $("eventText").textContent =
+            "A good day away from football.";
+
+    } else if (choice === 2) {
+
+        player.fitness = clamp(player.fitness + 12, 0, 100);
+
+        addLog(
+            `<strong>Rest day.</strong> You focused on recovery.`
+        );
+
+        $("eventText").textContent =
+            "You recovered and feel refreshed.";
+
+    } else if (choice === 3) {
+
+        player.happiness = clamp(player.happiness + 4, 0, 100);
+        player.reputation += 2;
+
+        addLog(
+            `<strong>Community event.</strong> Your reputation improved.`
+        );
+
+        $("eventText").textContent =
+            "People around you noticed your positive attitude.";
 
     } else {
 
-        player.happiness =
-            clamp(
-                player.happiness - 1,
-                0,
-                100
-            );
+        player.happiness = clamp(player.happiness - 3, 0, 100);
+        player.fitness = clamp(player.fitness + 5, 0, 100);
+
+        addLog(
+            `<strong>Quiet day.</strong> You stayed away from the spotlight.`
+        );
+
+        $("eventText").textContent =
+            "A peaceful day.";
     }
-
-
-    let resultText =
-        `You played a match and earned ${formatMoney(matchPay)}. `;
-
-
-    if (goals > 0) {
-
-        resultText +=
-            `You scored ${goals} goal${goals > 1 ? "s" : ""}. `;
-    }
-
-
-    if (assists > 0) {
-
-        resultText +=
-            `You made ${assists} assist${assists > 1 ? "s" : ""}.`;
-    }
-
-
-    if (goals === 0 && assists === 0) {
-
-        resultText +=
-            "It wasn't your best performance.";
-    }
-
-
-    eventText.textContent = resultText;
-
-
-    addLog(resultText);
 
     updateUI();
+    saveGame();
+});
 
-    saveCareer();
-}
 
+/* ---------------- YEAR END ---------------- */
 
-/* =========================================
-   LIFE ACTION
-========================================= */
+$("ageUpBtn").addEventListener("click", () => {
 
-function lifeAction() {
+    if (!player || player.retired) return;
 
-    const choices = [
+    if (player.injured) {
 
-        {
-            text: "You spent time with your family. Happiness increased.",
-            happiness: 8,
-            money: 0
-        },
+        player.injuryWeeks--;
 
-        {
-            text: "You took a relaxing day away from football. Fitness recovered.",
-            happiness: 5,
-            fitness: 10
-        },
+        if (player.injuryWeeks <= 0) {
 
-        {
-            text: "You attended a local football event and gained some reputation.",
-            reputation: 3,
-            happiness: 3
-        },
+            player.injured = false;
+            player.injuryWeeks = 0;
 
-        {
-            text: "You helped someone in your community. It felt rewarding.",
-            happiness: 7,
-            reputation: 2
-        },
+            addLog(
+                `<strong>Recovery complete.</strong> You are ready to return.`
+            );
 
-        {
-            text: "You focused on your studies and future outside football.",
-            happiness: 2,
-            reputation: 1
+        } else {
+
+            addLog(
+                `<strong>Recovery.</strong> ${player.injuryWeeks} week(s) remain.`
+            );
         }
-    ];
 
-
-    const choice =
-        choices[randomNumber(0, choices.length - 1)];
-
-
-    if (choice.happiness) {
-
-        player.happiness =
-            clamp(
-                player.happiness + choice.happiness,
-                0,
-                100
-            );
     }
 
+    player.age++;
+    player.season++;
 
-    if (choice.fitness) {
+    yearlyIncome();
+    yearlyDevelopment();
+    randomYearEvent();
+    careerProgression();
+    checkAchievements();
 
-        player.fitness =
-            clamp(
-                player.fitness + choice.fitness,
-                0,
-                100
-            );
-    }
-
-
-    if (choice.reputation) {
-
-        player.reputation =
-            clamp(
-                player.reputation + choice.reputation,
-                0,
-                100
-            );
-    }
-
-
-    eventText.textContent =
-        choice.text;
-
-
-    addLog(choice.text);
-
-    updateUI();
-
-    saveCareer();
-}
-
-
-/* =========================================
-   RANDOM YEAR EVENT
-========================================= */
-
-function randomYearEvent() {
-
-    const events = [
-
-        {
-            text: "A football scout watched one of your matches.",
-            action: () => {
-                player.reputation =
-                    clamp(player.reputation + 5, 0, 100);
-            }
-        },
-
-        {
-            text: "You had a great training week.",
-            action: () => {
-                player.rating =
-                    clamp(player.rating + 2, 1, 99);
-            }
-        },
-
-        {
-            text: "You received a small sponsorship bonus.",
-            action: () => {
-
-                const money =
-                    randomNumber(500, 1500);
-
-                player.money += money;
-                player.careerEarnings += money;
-            }
-        },
-
-        {
-            text: "You had a difficult week and felt mentally tired.",
-            action: () => {
-
-                player.happiness =
-                    clamp(player.happiness - 7, 0, 100);
-            }
-        },
-
-        {
-            text: "Your teammates praised your performances.",
-            action: () => {
-
-                player.happiness =
-                    clamp(player.happiness + 5, 0, 100);
-
-                player.reputation =
-                    clamp(player.reputation + 2, 0, 100);
-            }
-        },
-
-        {
-            text: "You were selected for an important youth tournament.",
-            action: () => {
-
-                player.reputation =
-                    clamp(player.reputation + 6, 0, 100);
-
-                player.happiness =
-                    clamp(player.happiness + 5, 0, 100);
-            }
-        },
-
-        {
-            text: "You picked up a minor football injury during training.",
-            action: () => {
-
-                player.injured = true;
-                player.injuryWeeks = randomNumber(1, 4);
-
-                player.fitness =
-                    clamp(player.fitness - 15, 0, 100);
-            }
-        }
-    ];
-
-
-    const event =
-        events[randomNumber(0, events.length - 1)];
-
-
-    event.action();
-
-    addLog(event.text);
-
-    return event.text;
-}
-
-
-/* =========================================
-   RECOVERY
-========================================= */
-
-function recoverFromInjury() {
-
-    if (!player.injured) {
+    if (player.age >= 40) {
+        retirePlayer();
         return;
     }
 
+    updateUI();
+    saveGame();
 
-    player.injuryWeeks--;
+    playCutscene(
+        `SEASON ${player.season}`,
+        `AGE ${player.age}`,
+        `Another year begins. Your choices will decide where your career goes next.`,
+        () => {
+            updateUI();
+        }
+    );
+});
 
 
-    if (player.injuryWeeks <= 0) {
+function yearlyIncome() {
 
-        player.injured = false;
-        player.injuryWeeks = 0;
+    let income = 300;
 
-        player.fitness =
-            clamp(player.fitness + 20, 0, 100);
+    if (player.clubStatus === "Professional Player") income = 700;
+    if (player.clubStatus === "First Team Player") income = 1800;
+    if (player.clubStatus === "Star Player") income = 3500;
+    if (player.clubStatus === "World-Class Player") income = 8000;
+
+    player.money += income;
+    player.careerEarnings += income;
+
+    addLog(
+        `<strong>Season earnings.</strong> You earned ${money(income)}.`
+    );
+}
+
+
+function yearlyDevelopment() {
+
+    if (player.age <= 23 && player.rating < player.potential) {
+
+        const chance = random(1, 100);
+
+        if (chance <= 40) {
+            player.rating++;
+        }
+    }
+
+    if (player.age >= 30) {
+
+        if (random(1, 100) <= 30) {
+            player.rating = Math.max(60, player.rating - 1);
+        }
+    }
+
+    player.fitness = clamp(
+        player.fitness + random(-5, 8),
+        20,
+        100
+    );
+}
+
+
+/* ---------------- RANDOM EVENTS ---------------- */
+
+function randomYearEvent() {
+
+    const event = random(1, 8);
+
+    if (event === 1) {
+
+        player.reputation += 3;
 
         addLog(
-            "You have recovered and returned to football."
+            `<strong>Scout attention.</strong> A professional scout watched your performances.`
         );
+
+        $("eventText").textContent =
+            "A professional scout has started following your career.";
+
+    } else if (event === 2) {
+
+        player.money += 1000;
+
+        addLog(
+            `<strong>Sponsorship opportunity.</strong> You earned €1,000.`
+        );
+
+        $("eventText").textContent =
+            "A small sponsorship deal has arrived.";
+
+    } else if (event === 3) {
+
+        player.happiness = clamp(player.happiness - 8, 0, 100);
+
+        addLog(
+            `<strong>Difficult season.</strong> Pressure has increased.`
+        );
+
+        $("eventText").textContent =
+            "The pressure around your career is growing.";
+
+    } else if (event === 4) {
+
+        player.injured = true;
+        player.injuryWeeks = random(1, 3);
+
+        addLog(
+            `<strong>Injury setback.</strong> You need ${player.injuryWeeks} week(s) to recover.`
+        );
+
+        $("eventText").textContent =
+            `You picked up an injury. Recovery: ${player.injuryWeeks} week(s).`;
+
+    } else if (event === 5) {
+
+        player.happiness = clamp(player.happiness + 7, 0, 100);
+
+        addLog(
+            `<strong>Teammates noticed.</strong> Your leadership is growing.`
+        );
+
+        $("eventText").textContent =
+            "Your teammates are starting to respect you.";
+
+    } else if (event === 6) {
+
+        if (player.rating < player.potential) {
+            player.rating++;
+        }
+
+        addLog(
+            `<strong>Breakthrough season.</strong> Your development continues.`
+        );
+
+        $("eventText").textContent =
+            "Something clicked this season.";
+
+    } else if (event === 7) {
+
+        player.money += 2000;
+
+        addLog(
+            `<strong>Performance bonus.</strong> You received €2,000.`
+        );
+
+        $("eventText").textContent =
+            "Your club rewarded your performances.";
 
     } else {
 
         addLog(
-            `You continued your recovery. ${player.injuryWeeks} week(s) remaining.`
+            `<strong>Quiet season.</strong> Nothing major changed.`
         );
+
+        $("eventText").textContent =
+            "A quiet year. Sometimes that's part of football.";
     }
+
+    player.reputation = clamp(player.reputation, 0, 100);
 }
 
 
-/* =========================================
-   CAREER PROGRESSION
-========================================= */
+/* ---------------- CAREER PROGRESSION ---------------- */
 
-function checkCareerProgression() {
+function careerProgression() {
 
     if (
-        player.club === "PROJECT XI Academy" &&
         player.age >= 18 &&
-        player.rating >= 65
+        player.rating >= 64 &&
+        player.clubStatus === "Youth Player"
     ) {
 
-        player.club =
-            "PROJECT XI FC";
-
-        player.clubStatus =
-            "Professional Player";
-
+        player.club = "PROJECT XI FC";
+        player.clubStatus = "Professional Player";
         player.money += 5000;
-        player.careerEarnings += 5000;
-
-        player.reputation =
-            clamp(player.reputation + 10, 0, 100);
-
 
         addLog(
-            "BREAKING NEWS: You signed your first professional contract with PROJECT XI FC!"
+            `<strong>PROFESSIONAL CONTRACT.</strong> You have officially become a professional footballer.`
         );
 
-        eventText.textContent =
-            "YOU'RE A PROFESSIONAL FOOTBALLER! Your career has entered a new era.";
+        playCutscene(
+            "PROJECT XI FC",
+            "THE FIRST CONTRACT",
+            "Years of work have finally paid off. You are officially a professional footballer.",
+            () => {
+                updateUI();
+            }
+        );
+
+        return;
     }
 
 
     if (
         player.age >= 21 &&
-        player.rating >= 75 &&
-        player.club === "PROJECT XI FC"
+        player.rating >= 72 &&
+        player.clubStatus === "Professional Player"
     ) {
 
-        player.club =
-            "PROJECT XI United";
-
-        player.clubStatus =
-            "First Team Star";
-
+        player.club = "PROJECT XI UNITED";
+        player.clubStatus = "First Team Player";
         player.money += 15000;
-        player.careerEarnings += 15000;
-
-        player.reputation =
-            clamp(player.reputation + 15, 0, 100);
-
 
         addLog(
-            "Your performances earned you a move to PROJECT XI United."
+            `<strong>FIRST TEAM.</strong> You earned a place at PROJECT XI United.`
+        );
+
+        playCutscene(
+            "PROJECT XI UNITED",
+            "THE BIG STEP",
+            "You're no longer just a prospect. You're ready for the first team.",
+            () => {
+                updateUI();
+            }
+        );
+
+        return;
+    }
+
+
+    if (
+        player.age >= 25 &&
+        player.rating >= 80 &&
+        player.clubStatus === "First Team Player"
+    ) {
+
+        player.clubStatus = "Star Player";
+
+        addLog(
+            `<strong>STAR STATUS.</strong> You have become one of the club's most important players.`
+        );
+
+        $("eventText").textContent =
+            "You are now considered a star.";
+    }
+
+
+    if (
+        player.age >= 29 &&
+        player.rating >= 85 &&
+        player.reputation >= 60 &&
+        player.clubStatus === "Star Player"
+    ) {
+
+        player.clubStatus = "World-Class Player";
+
+        addLog(
+            `<strong>WORLD CLASS.</strong> You have reached the highest level of your generation.`
+        );
+
+        playCutscene(
+            "THE FOOTBALL WORLD",
+            "WORLD CLASS",
+            "Your name is now known around the football world.",
+            () => updateUI()
+        );
+    }
+}
+
+
+/* ---------------- ACHIEVEMENTS ---------------- */
+
+function checkAchievements() {
+
+    if (!player) return;
+
+    if (player.goals >= 25 && !player.achievements.includes("Golden Boot")) {
+
+        player.achievements.push("Golden Boot");
+        player.goldenBoots++;
+
+        addLog(
+            `<strong>🏆 GOLDEN BOOT.</strong> You reached 25 career goals.`
         );
     }
 
 
     if (
-        player.age >= 28 &&
-        player.rating >= 85 &&
-        player.reputation >= 60
+        player.rating >= 80 &&
+        player.goals >= 40 &&
+        player.trophies >= 2 &&
+        !player.achievements.includes("Player of the Year")
     ) {
 
-        player.clubStatus =
-            "World-Class Player";
+        player.achievements.push("Player of the Year");
+        player.playerOfYear++;
 
         addLog(
-            "You have reached world-class status."
+            `<strong>🏆 PLAYER OF THE YEAR.</strong> Your career has reached another level.`
         );
     }
-}
 
 
-/* =========================================
-   AGE UP
-========================================= */
-
-function ageUp() {
-
-    if (player.retired) {
-        return;
-    }
-
-
-    player.age++;
-    player.season++;
-
-
-    /* YEARLY MONEY */
-
-    if (player.clubStatus === "Youth Player") {
-
-        const income =
-            randomNumber(500, 1500);
-
-        player.money += income;
-        player.careerEarnings += income;
-
-    } else if (
-        player.clubStatus === "Professional Player"
+    if (
+        player.rating >= 90 &&
+        player.goals >= 100 &&
+        player.trophies >= 5 &&
+        player.reputation >= 80 &&
+        !player.achievements.includes("Ballon d'Or")
     ) {
 
-        const income =
-            randomNumber(10000, 25000);
+        player.achievements.push("Ballon d'Or");
+        player.ballonDor++;
 
-        player.money += income;
-        player.careerEarnings += income;
-
-    } else {
-
-        const income =
-            randomNumber(25000, 75000);
-
-        player.money += income;
-        player.careerEarnings += income;
-    }
-
-
-    /* NATURAL DEVELOPMENT */
-
-    if (player.age < 23) {
-
-        player.rating =
-            clamp(
-                player.rating + randomNumber(1, 3),
-                1,
-                99
-            );
-
-    } else if (player.age >= 30) {
-
-        player.rating =
-            clamp(
-                player.rating - randomNumber(0, 2),
-                1,
-                99
-            );
-    }
-
-
-    player.fitness =
-        clamp(
-            player.fitness + randomNumber(-5, 5),
-            0,
-            100
+        addLog(
+            `<strong>🏆 BALLON D'OR.</strong> You have become one of the greatest players in the world.`
         );
-
-
-    /* RANDOM EVENT */
-
-    const event =
-        randomYearEvent();
-
-
-    /* RECOVERY */
-
-    recoverFromInjury();
-
-
-    /* CAREER PROGRESSION */
-
-    checkCareerProgression();
-
-
-    /* AGE MESSAGE */
-
-    eventText.textContent =
-        `You are now ${player.age}. ${event}`;
-
-
-    /* RETIREMENT */
-
-    if (player.age >= 40) {
-
-        retirePlayer();
-
-        return;
     }
-
-
-    updateUI();
-
-    saveCareer();
 }
 
 
-/* =========================================
-   RETIREMENT
-========================================= */
+/* ---------------- RETIREMENT ---------------- */
 
 function retirePlayer() {
 
     player.retired = true;
 
     addLog(
-        `At age ${player.age}, you officially retired from professional football.`
+        `<strong>RETIREMENT.</strong> After ${player.season} seasons, your playing career has ended.`
     );
 
+    $("legacyGoals").textContent = player.goals;
+    $("legacyAssists").textContent = player.assists;
+    $("legacyTrophies").textContent = player.trophies;
+    $("legacyMoney").textContent = money(player.money);
 
-    legacyGoals.textContent =
-        player.goals;
+    renderAchievements();
 
-    legacyAssists.textContent =
-        player.assists;
+    saveGame();
 
-    legacyTrophies.textContent =
-        player.trophies;
+    showScreen(screens.legacy);
 
-    legacyMoney.textContent =
-        formatMoney(player.careerEarnings);
-
-
-    showScreen(legacyScreen);
-
-    saveCareer();
+    playCutscene(
+        "THE FINAL WHISTLE",
+        "YOUR PLAYING CAREER IS OVER",
+        "The boots are hanging up. But this isn't the end of your football story.",
+        () => {
+            showScreen(screens.legacy);
+        }
+    );
 }
 
 
-/* =========================================
-   CREATE CLUB
-========================================= */
+function renderAchievements() {
 
-function createClub() {
+    const list = $("achievementList");
+    list.innerHTML = "";
 
-    if (!player.retired) {
+    if (!player.achievements.length) {
 
-        alert(
-            "You must retire from football before creating your own club."
-        );
+        list.innerHTML =
+            `<div class="achievement">No major individual awards yet.</div>`;
 
         return;
     }
 
+    player.achievements.forEach(achievement => {
+
+        const div = document.createElement("div");
+
+        div.className = "achievement";
+        div.textContent = "🏆 " + achievement;
+
+        list.appendChild(div);
+    });
+}
+
+
+/* ---------------- CLUB CREATION ---------------- */
+
+$("createClubBtn").addEventListener("click", () => {
+
+    if (!player || !player.retired) return;
+
+    showScreen(screens.club);
+});
+
+
+$("confirmClubBtn").addEventListener("click", () => {
+
+    const name = $("newClubName").value.trim();
+    const city = $("newClubCity").value.trim();
+    const stadium = $("newStadiumName").value.trim();
+    const motto = $("newClubMotto").value.trim();
+
+    if (!name || !city || !stadium || !motto) {
+
+        $("clubError").textContent =
+            "Complete every field before founding your club.";
+
+        return;
+    }
 
     if (player.money < 100000) {
 
-        alert(
-            "You need at least €100,000 to create your first football club."
-        );
+        $("clubError").textContent =
+            "You need at least €100,000 to found your club.";
 
         return;
     }
-
-
-    const clubNameInput =
-        prompt(
-            "Enter your new club's name:"
-        );
-
-
-    if (!clubNameInput) {
-        return;
-    }
-
-
-    const newClub =
-        clubNameInput.trim();
-
-
-    if (newClub.length < 3) {
-
-        alert(
-            "Club name must contain at least 3 characters."
-        );
-
-        return;
-    }
-
 
     player.money -= 100000;
 
-    player.club =
-        newClub;
+    club = {
+        name,
+        city,
+        stadium,
+        motto,
 
-    player.clubStatus =
-        "Owner";
+        funds: 100000,
 
+        academy: 1,
+        training: 1,
+        scouting: 1,
+        stadiumLevel: 1
+    };
+
+    player.club = name;
+    player.clubStatus = "Owner";
 
     addLog(
-        `You invested €100,000 and founded ${newClub}. Your football ownership era begins.`
+        `<strong>CLUB FOUNDED.</strong> You created ${name}.`
     );
 
+    updateOwnerUI();
 
-    alert(
-        `🏟️ ${newClub} has officially been founded!`
-    );
+    saveGame();
 
+    showScreen(screens.owner);
 
-    saveCareer();
-}
-
-
-/* =========================================
-   SAVE CAREER
-========================================= */
-
-function saveCareer() {
-
-    try {
-
-        localStorage.setItem(
-            "projectXI_football_life",
-            JSON.stringify(player)
-        );
-
-    } catch (error) {
-
-        console.log(
-            "Could not save career.",
-            error
-        );
-    }
-}
-
-
-/* =========================================
-   LOAD CAREER
-========================================= */
-
-function loadCareer() {
-
-    try {
-
-        const saved =
-            localStorage.getItem(
-                "projectXI_football_life"
-            );
-
-
-        if (!saved) {
-            return false;
+    playCutscene(
+        name,
+        "A NEW CLUB IS BORN",
+        `From player to owner. Your new club begins with one mission: build something that lasts.`,
+        () => {
+            showScreen(screens.owner);
         }
+    );
+});
 
 
-        const loaded =
-            JSON.parse(saved);
+/* ---------------- OWNER MODE ---------------- */
 
+function updateOwnerUI() {
 
-        player = {
-            ...player,
-            ...loaded
-        };
+    if (!club) return;
 
+    $("ownerClubName").textContent = club.name;
+    $("ownerClubInfo").textContent =
+        `${club.city} • ${club.stadium}`;
 
-        return true;
+    $("ownerMotto").textContent =
+        `"${club.motto}"`;
 
-    } catch (error) {
+    $("clubMoney").textContent =
+        money(club.funds);
 
-        console.log(
-            "Could not load career.",
-            error
-        );
+    $("academyLevel").textContent =
+        club.academy;
 
-        return false;
-    }
+    $("trainingLevel").textContent =
+        club.training;
+
+    $("scoutLevel").textContent =
+        club.scouting;
+
+    $("stadiumLevel").textContent =
+        club.stadiumLevel;
 }
 
 
-/* =========================================
-   RETURN TO MAIN MENU
-========================================= */
+function upgradeClub(type) {
 
-function returnToMenu() {
+    if (!club) return;
 
-    const confirmLeave =
-        confirm(
-            "Return to the main menu? Your saved career will remain available."
-        );
+    const costs = {
+        academy: 15000,
+        training: 20000,
+        scouting: 25000,
+        stadium: 30000
+    };
 
+    const cost = costs[type];
 
-    if (!confirmLeave) {
+    if (club.funds < cost) {
+
+        alert("Your club doesn't have enough funds.");
+
         return;
     }
 
+    club.funds -= cost;
 
-    showScreen(startScreen);
+    club[type === "stadium" ? "stadiumLevel" : type]++;
+
+    const names = {
+        academy: "Youth Academy",
+        training: "Training Ground",
+        scouting: "Scouting Network",
+        stadium: "Stadium"
+    };
+
+    addLog(
+        `<strong>CLUB UPGRADE.</strong> ${names[type]} reached level ${club[type === "stadium" ? "stadiumLevel" : type]}.`
+    );
+
+    updateOwnerUI();
+    saveGame();
 }
 
 
-/* =========================================
-   BUTTON EVENTS
-========================================= */
+$("upgradeAcademyBtn").addEventListener("click", () =>
+    upgradeClub("academy")
+);
 
-startCareerBtn.addEventListener(
-    "click",
-    createPlayer
+$("upgradeTrainingBtn").addEventListener("click", () =>
+    upgradeClub("training")
+);
+
+$("upgradeScoutBtn").addEventListener("click", () =>
+    upgradeClub("scouting")
+);
+
+$("upgradeStadiumBtn").addEventListener("click", () =>
+    upgradeClub("stadium")
 );
 
 
-trainBtn.addEventListener(
-    "click",
-    train
-);
+/* ---------------- SAVE ---------------- */
 
+function saveGame() {
 
-matchBtn.addEventListener(
-    "click",
-    playMatch
-);
+    if (!player) return;
 
-
-lifeBtn.addEventListener(
-    "click",
-    lifeAction
-);
-
-
-ageUpBtn.addEventListener(
-    "click",
-    ageUp
-);
-
-
-saveBtn.addEventListener(
-    "click",
-    () => {
-
-        saveCareer();
-
-        eventText.textContent =
-            "Career saved successfully.";
-
-    }
-);
-
-
-menuBtn.addEventListener(
-    "click",
-    returnToMenu
-);
-
-
-createClubBtn.addEventListener(
-    "click",
-    createClub
-);
-
-
-/* =========================================
-   LOAD SAVED CAREER ON STARTUP
-========================================= */
-
-const careerLoaded =
-    loadCareer();
-
-
-if (careerLoaded) {
-
-    updateUI();
-
-    addLog(
-        "Saved career loaded successfully."
+    localStorage.setItem(
+        SAVE_KEY,
+        JSON.stringify({
+            player,
+            club
+        })
     );
 }
 
 
-/* =========================================
-   INITIAL STATE
-========================================= */
+$("saveBtn").addEventListener("click", () => {
 
-showScreen(startScreen);
+    saveGame();
 
-console.log(
-    "PROJECT XI — FOOTBALL LIFE loaded successfully."
-);
+    $("eventText").textContent =
+        "Career saved successfully.";
+});
+
+
+function loadGame() {
+
+    const saved = localStorage.getItem(SAVE_KEY);
+
+    if (!saved) return;
+
+    try {
+
+        const data = JSON.parse(saved);
+
+        player = data.player || null;
+        club = data.club || null;
+
+        if (player) {
+
+            updateUI();
+
+            if (player.retired) {
+
+                renderAchievements();
+
+                if (club) {
+                    updateOwnerUI();
+                    showScreen(screens.owner);
+                } else {
+                    showScreen(screens.legacy);
+                }
+
+            } else {
+
+                showScreen(screens.career);
+            }
+        }
+
+    } catch {
+
+        localStorage.removeItem(SAVE_KEY);
+    }
+}
+
+
+/* ---------------- MENU ---------------- */
+
+$("logoBtn").addEventListener("click", () => {
+
+    showScreen(screens.menu);
+});
+
+
+$("menuBtn").addEventListener("click", () => {
+
+    showScreen(screens.menu);
+});
+
+
+$("legacyMenuBtn").addEventListener("click", () => {
+
+    showScreen(screens.menu);
+});
+
+
+$("ownerMenuBtn").addEventListener("click", () => {
+
+    showScreen(screens.menu);
+});
+
+
+$("continueBtn").addEventListener("click", () => {
+
+    if (!player) {
+
+        showScreen(screens.start);
+        return;
+    }
+
+    if (player.retired && club) {
+
+        updateOwnerUI();
+        showScreen(screens.owner);
+
+    } else if (player.retired) {
+
+        showScreen(screens.legacy);
+
+    } else {
+
+        updateUI();
+        showScreen(screens.career);
+    }
+});
+
+
+$("newGameBtn").addEventListener("click", () => {
+
+    if (confirm("Start a completely new life? Your current career will be replaced.")) {
+
+        localStorage.removeItem(SAVE_KEY);
+
+        player = null;
+        club = null;
+
+        $("playerName").value = "";
+        $("playerCountry").value = "";
+
+        showScreen(screens.start);
+    }
+});
+
+
+/* ---------------- START ---------------- */
+
+loadGame();
+
+if (!player) {
+    showScreen(screens.menu);
+}
