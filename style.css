@@ -5,24 +5,30 @@
 
 :root {
     --bg: #050505;
-    --bg-2: #0a0a0a;
+    --bg-2: #0b0b0b;
     --panel: #101010;
     --panel-2: #151515;
     --panel-3: #1b1b1b;
 
+    /* PROJECT XI — RED */
+    --red: #e10600;
+    --red-dark: #8f0000;
+    --red-light: #ff2b22;
+
+    /* WHITE / SILVER */
+    --text: #f5f5f5;
+    --muted: #888888;
+    --muted-2: #5f5f5f;
+
+    --white: #ffffff;
+    --silver: #b8b8b8;
+
     --line: #292929;
     --line-light: #3a3a3a;
 
-    --text: #f4f4f4;
-    --muted: #8d8d8d;
-    --muted-2: #666;
-
-    --white: #ffffff;
-    --silver: #bdbdbd;
-
-    --success: #d9ffd9;
-    --danger: #ff8d8d;
-    --warning: #ffe39a;
+    --success: #7dff9a;
+    --danger: #e10600;
+    --warning: #ffd166;
 
     --radius: 14px;
     --radius-small: 9px;
