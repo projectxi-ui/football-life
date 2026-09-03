@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PROJECT XI — Football Life</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ============================= -->
+    <!-- MAIN APP -->
+    <!-- ============================= -->
+
+    <main class="app">
+
+        <!-- HEADER -->
+        <header class="topbar">
+
+            <div class="brand">
+                <div class="brand-logo">XI</div>
+
+                <div>
+                    <h1>PROJECT XI</h1>
+                    <p>FOOTBALL LIFE</p>
+                </div>
+            </div>
+
+            <div class="status">
+                <span class="status-dot"></span>
+                CAREER MODE
+            </div>
+
+        </header>
+
+
+        <!-- ============================= -->
+        <!-- START SCREEN -->
+        <!-- ============================= -->
+
+        <section id="startScreen" class="screen active">
+
+            <div class="hero">
+
+                <div class="hero-badge">
+                    FOOTBALL LIFE SIMULATOR
+                </div>
+
+                <h2>
+                    Build Your
+                    <span>Football Legacy.</span>
+                </h2>
+
+                <p>
+                    Start as a young footballer and live your career
+                    from the academy to retirement — and beyond.
+                </p>
+
+            </div>
+
+
+            <!-- PLAYER CREATION -->
+
+            <div class="creation-card">
+
+                <div class="section-title">
+                    <span>01</span>
+                    CREATE YOUR FOOTBALLER
+                </div>
+
+
+                <div class="form-grid">
+
+                    <div class="input-group">
+
+                        <label for="playerName">
+                            PLAYER NAME
+                        </label>
+
+                        <input
+                            type="text"
+                            id="playerName"
+                            placeholder="Enter your name"
+                            maxlength="20"
+                            autocomplete="off"
+                        >
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="playerCountry">
+                            COUNTRY
+                        </label>
+
+                        <input
+                            type="text"
+                            id="playerCountry"
+                            placeholder="Enter your country"
+                            maxlength="25"
+                            autocomplete="off"
+                        >
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="playerPosition">
+                            POSITION
+                        </label>
+
+                        <select id="playerPosition">
+
+                            <option value="ST">
+                                Striker
+                            </option>
+
+                            <option value="LW">
+                                Left Wing
+                            </option>
+
+                            <option value="RW">
+                                Right Wing
+                            </option>
+
+                            <option value="CAM">
+                                Attacking Midfielder
+                            </option>
+
+                            <option value="CM">
+                                Central Midfielder
+                            </option>
+
+                            <option value="CDM">
+                                Defensive Midfielder
+                            </option>
+
+                            <option value="CB">
+                                Centre Back
+                            </option>
+
+                            <option value="LB">
+                                Left Back
+                            </option>
+
+                            <option value="RB">
+                                Right Back
+                            </option>
+
+                            <option value="GK">
+                                Goalkeeper
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="playerAge">
+                            STARTING AGE
+                        </label>
+
+                        <select id="playerAge">
+
+                            <option value="16">16</option>
+                            <option value="17" selected>17</option>
+                            <option value="18">18</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    id="startCareerBtn"
+                    class="primary-button"
+                    type="button"
+                >
+                    START MY CAREER
+                    <span>→</span>
+                </button>
+
+
+                <p id="startError" class="error-message"></p>
+
+            </div>
+
+
+            <!-- GAME FEATURES -->
+
+            <div class="features">
+
+                <div class="feature">
+
+                    <div class="feature-icon">⚽</div>
+
+                    <h3>FOOTBALL</h3>
+
+                    <p>
+                        Train, play matches, score goals,
+                        win trophies and earn your place.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">💰</div>
+
+                    <h3>LIFE</h3>
+
+                    <p>
+                        Manage money, happiness, family,
+                        decisions and your future.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">🏆</div>
+
+                    <h3>LEGACY</h3>
+
+                    <p>
+                        Retire as a legend and build your
+                        own football club.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ============================= -->
+        <!-- CAREER SCREEN -->
+        <!-- ============================= -->
+
+        <section id="careerScreen" class="screen">
+
+            <!-- PLAYER HEADER -->
+
+            <div class="player-header">
+
+                <div class="player-info">
+
+                    <div class="player-avatar" id="playerAvatar">
+                        XI
+                    </div>
+
+                    <div>
+
+                        <p class="small-label">
+                            YOUR FOOTBALLER
+                        </p>
+
+                        <h2 id="displayName">
+                            Player
+                        </h2>
+
+                        <p id="displayDetails">
+                            17 • ST • Academy
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="season-info">
+
+                    <p class="small-label">
+                        SEASON
+                    </p>
+
+                    <strong id="seasonDisplay">
+                        1
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- STATS -->
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <span class="stat-icon">🎂</span>
+
+                    <p>AGE</p>
+
+                    <strong id="ageStat">
+                        17
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <span class="stat-icon">⭐</span>
+
+                    <p>RATING</p>
+
+                    <strong id="ratingStat">
+                        62
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <span class="stat-icon">💪</span>
+
+                    <p>FITNESS</p>
+
+                    <strong id="fitnessStat">
+                        75
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <span class="stat-icon">❤️</span>
+
+                    <p>HAPPINESS</p>
+
+                    <strong id="happinessStat">
+                        80
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <span class="stat-icon">💰</span>
+
+                    <p>MONEY</p>
+
+                    <strong id="moneyStat">
+                        €2,000
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <span class="stat-icon">🌟</span>
+
+                    <p>REPUTATION</p>
+
+                    <strong id="reputationStat">
+                        10
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- CURRENT CLUB -->
+
+            <div class="club-card">
+
+                <div>
+
+                    <p class="small-label">
+                        CURRENT CLUB
+                    </p>
+
+                    <h2 id="clubName">
+                        PROJECT XI Academy
+                    </h2>
+
+                    <p id="clubStatus">
+                        Youth Player
+                    </p>
+
+                </div>
+
+
+                <div class="club-badge">
+                    XI
+                </div>
+
+            </div>
+
+
+            <!-- YEAR ACTION -->
+
+            <div class="action-card">
+
+                <div class="section-title">
+                    <span>02</span>
+                    YOUR NEXT MOVE
+                </div>
+
+                <p id="eventText">
+                    Your football journey is about to begin.
+                    What will you do this year?
+                </p>
+
+
+                <div class="action-buttons">
+
+                    <button
+                        type="button"
+                        class="action-button"
+                        id="trainBtn"
+                    >
+                        <span>⚽</span>
+                        TRAIN
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="action-button"
+                        id="matchBtn"
+                    >
+                        <span>🏟️</span>
+                        PLAY MATCH
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="action-button"
+                        id="lifeBtn"
+                    >
+                        <span>❤️</span>
+                        LIFE
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="action-button"
+                        id="ageUpBtn"
+                    >
+                        <span>⏩</span>
+                        AGE UP
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- CAREER LOG -->
+
+            <div class="career-log">
+
+                <div class="section-title">
+                    <span>03</span>
+                    CAREER JOURNAL
+                </div>
+
+                <div id="careerLog">
+
+                    <div class="log-entry">
+
+                        <span class="log-year">
+                            YEAR 1
+                        </span>
+
+                        <p>
+                            Your football journey begins.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SAVE / RESET -->
+
+            <div class="bottom-actions">
+
+                <button
+                    type="button"
+                    id="saveBtn"
+                    class="secondary-button"
+                >
+                    💾 SAVE CAREER
+                </button>
+
+
+                <button
+                    type="button"
+                    id="menuBtn"
+                    class="secondary-button"
+                >
+                    ← MAIN MENU
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ============================= -->
+        <!-- RETIREMENT / LEGACY SCREEN -->
+        <!-- ============================= -->
+
+        <section id="legacyScreen" class="screen">
+
+            <div class="legacy-hero">
+
+                <div class="legacy-badge">
+                    CAREER COMPLETE
+                </div>
+
+                <h2>
+                    Your Football
+                    <span>Legacy.</span>
+                </h2>
+
+                <p>
+                    Retirement isn't the end.
+                    It's the beginning of your next chapter.
+                </p>
+
+            </div>
+
+
+            <div class="legacy-card">
+
+                <h3>
+                    🏟️ BECOME A CLUB OWNER
+                </h3>
+
+                <p>
+                    Use the money you earned during your
+                    football career to create your own club.
+                </p>
+
+                <button
+                    type="button"
+                    id="createClubBtn"
+                    class="primary-button"
+                >
+                    CREATE MY CLUB →
+                </button>
+
+            </div>
+
+
+            <div class="legacy-stats">
+
+                <div>
+                    <span>CAREER GOALS</span>
+                    <strong id="legacyGoals">0</strong>
+                </div>
+
+                <div>
+                    <span>ASSISTS</span>
+                    <strong id="legacyAssists">0</strong>
+                </div>
+
+                <div>
+                    <span>TROPHIES</span>
+                    <strong id="legacyTrophies">0</strong>
+                </div>
+
+                <div>
+                    <span>CAREER EARNINGS</span>
+                    <strong id="legacyMoney">€0</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ============================= -->
+    <!-- JAVASCRIPT -->
+    <!-- ============================= -->
+
+    <script src="script.js"></script>
+
+</body>
+</html>
