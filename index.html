@@ -1,1525 +1,1352 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>PROJECT XI | FOOTBALL LIFE</title>
+<title>PROJECT XI | FOOTBALL LIFE</title>
 
-  <link rel="stylesheet" href="style.css?v=10">
+<link rel="stylesheet" href="style.css?v=20">
 </head>
 
 <body>
 
-  <!-- =========================================
-       CINEMATIC CUTSCENE
-  ========================================== -->
-
-  <div id="cutsceneOverlay" class="cutscene-overlay hidden">
-
-    <div class="cutscene-bg"></div>
-
-    <div class="cutscene-content">
-
-      <div id="cutsceneLocation" class="cutscene-location">
-        PROJECT XI
-      </div>
-
-      <div id="cutsceneTitle" class="cutscene-title">
-        A NEW CHAPTER
-      </div>
-
-      <div id="cutsceneText" class="cutscene-text">
-        Your story is about to change.
-      </div>
-
-      <button
-        id="cutsceneContinue"
-        class="primary cutscene-button"
-        type="button">
-        CONTINUE
-      </button>
-
-    </div>
-  </div>
-
-
-  <!-- =========================================
-       TOP BAR
-  ========================================== -->
-
-  <header class="topbar">
-
-    <button
-      id="logoButton"
-      class="logo-button"
-      type="button">
-
-      <span class="logo-main">PROJECT XI</span>
-      <span class="logo-sub">FOOTBALL LIFE</span>
-
+<header class="topbar">
+    <button id="logoButton" class="logo-button" type="button">
+        <span class="logo-main">PROJECT XI</span>
+        <span class="logo-sub">FOOTBALL LIFE</span>
     </button>
 
     <div class="topbar-right">
-
-      <div id="topAge" class="top-stat">
-        AGE <strong>16</strong>
-      </div>
-
-      <div id="topRating" class="top-stat">
-        OVR <strong>60</strong>
-      </div>
-
-      <div id="topMoney" class="top-stat">
-        €0
-      </div>
-
+        <div id="topAge" class="top-stat">AGE <strong>16</strong></div>
+        <div id="topRating" class="top-stat">OVR <strong>60</strong></div>
+        <div id="topMoney" class="top-stat">€0</div>
     </div>
-
-  </header>
-
-
-  <!-- =========================================
-       MAIN APP
-  ========================================== -->
-
-  <main id="app">
+</header>
 
 
-    <!-- =======================================
-         MAIN MENU
-    ======================================== -->
+<main id="app">
 
-    <section id="menuScreen" class="screen active">
+<!-- ================= MENU ================= -->
 
-      <div class="hero">
+<section id="menuScreen" class="screen active">
+
+    <div class="hero">
 
         <div class="hero-eyebrow">
-          THE FOOTBALL LIFE SIMULATOR
+            THE FOOTBALL LIFE SIMULATOR
         </div>
 
         <h1>PROJECT XI</h1>
 
         <p>
-          Build your career. Become a legend.
-          Then build the club that carries your name.
+            Build your career. Become a legend.
+            Win trophies, change clubs and create your football legacy.
         </p>
 
         <div class="menu-actions">
+            <button id="newGameButton" class="primary" type="button">
+                START NEW LIFE
+            </button>
 
-          <button
-            id="newGameButton"
-            class="primary"
-            type="button">
-            START NEW LIFE
-          </button>
+            <button id="continueButton" class="secondary" type="button">
+                CONTINUE
+            </button>
 
-          <button
-            id="continueButton"
-            class="secondary"
-            type="button">
-            CONTINUE
-          </button>
-
-          <button
-            id="legacyMenuButton"
-            class="secondary"
-            type="button">
-            LEGACY
-          </button>
-
+            <button id="legacyMenuButton" class="secondary" type="button">
+                LEGACY
+            </button>
         </div>
 
-      </div>
+    </div>
 
-      <div class="menu-news">
-
-        <div class="section-label">
-          WORLD FOOTBALL
-        </div>
+    <div class="menu-news">
+        <div class="section-label">WORLD FOOTBALL</div>
 
         <div id="menuWorldFeed" class="world-feed">
-          <div class="feed-item">
-            Football never stops.
-          </div>
+            <div class="feed-item">
+                Football never stops.
+            </div>
         </div>
+    </div>
 
-      </div>
-
-    </section>
+</section>
 
 
-    <!-- =======================================
-         PLAYER CREATION
-    ======================================== -->
+<!-- ================= PLAYER CREATION ================= -->
 
-    <section id="createScreen" class="screen">
+<section id="createScreen" class="screen">
 
-      <div class="page-header">
-
+    <div class="page-header">
         <div>
-          <span class="eyebrow">CHAPTER 01</span>
-          <h2>CREATE YOUR FOOTBALLER</h2>
+            <span class="eyebrow">CHAPTER 01</span>
+            <h2>CREATE YOUR FOOTBALLER</h2>
         </div>
+    </div>
 
-      </div>
-
-      <div class="creation-layout">
+    <div class="creation-layout">
 
         <div class="creation-panel">
 
-          <label for="playerName">
-            PLAYER NAME
-          </label>
+            <label for="playerName">PLAYER NAME</label>
+            <input id="playerName"
+                   type="text"
+                   maxlength="24"
+                   placeholder="Enter your name">
 
-          <input
-            id="playerName"
-            type="text"
-            maxlength="24"
-            placeholder="Enter your name">
+            <label for="playerCountry">NATIONALITY</label>
 
-          <label for="playerCountry">
-            NATIONALITY
-          </label>
+            <select id="playerCountry">
+                <option value="India">India</option>
+                <option value="Brazil">Brazil</option>
+                <option value="Argentina">Argentina</option>
+                <option value="Portugal">Portugal</option>
+                <option value="France">France</option>
+                <option value="Germany">Germany</option>
+                <option value="Spain">Spain</option>
+                <option value="England">England</option>
+                <option value="Netherlands">Netherlands</option>
+                <option value="Japan">Japan</option>
+                <option value="South Korea">South Korea</option>
+                <option value="UAE">UAE</option>
+            </select>
 
-          <select id="playerCountry">
-            <option value="India">India</option>
-            <option value="Brazil">Brazil</option>
-            <option value="Argentina">Argentina</option>
-            <option value="Portugal">Portugal</option>
-            <option value="France">France</option>
-            <option value="Germany">Germany</option>
-            <option value="Spain">Spain</option>
-            <option value="England">England</option>
-            <option value="Netherlands">Netherlands</option>
-            <option value="Japan">Japan</option>
-            <option value="South Korea">South Korea</option>
-            <option value="UAE">UAE</option>
-          </select>
+            <label for="playerPosition">POSITION</label>
 
-          <label for="playerPosition">
-            POSITION
-          </label>
+            <select id="playerPosition">
+                <option value="ST">ST — Striker</option>
+                <option value="LW">LW — Left Wing</option>
+                <option value="RW">RW — Right Wing</option>
+                <option value="CAM">CAM — Attacking Midfielder</option>
+                <option value="CM">CM — Central Midfielder</option>
+                <option value="CDM">CDM — Defensive Midfielder</option>
+                <option value="CB">CB — Centre Back</option>
+                <option value="LB">LB — Left Back</option>
+                <option value="RB">RB — Right Back</option>
+                <option value="GK">GK — Goalkeeper</option>
+            </select>
 
-          <select id="playerPosition">
-            <option value="ST">ST — Striker</option>
-            <option value="LW">LW — Left Wing</option>
-            <option value="RW">RW — Right Wing</option>
-            <option value="CAM">CAM — Attacking Midfielder</option>
-            <option value="CM">CM — Central Midfielder</option>
-            <option value="CDM">CDM — Defensive Midfielder</option>
-            <option value="CB">CB — Centre Back</option>
-            <option value="LB">LB — Left Back</option>
-            <option value="RB">RB — Right Back</option>
-            <option value="GK">GK — Goalkeeper</option>
-          </select>
+            <label for="playerFoot">PREFERRED FOOT</label>
 
-          <label for="playerFoot">
-            PREFERRED FOOT
-          </label>
+            <select id="playerFoot">
+                <option value="Right">Right</option>
+                <option value="Left">Left</option>
+            </select>
 
-          <select id="playerFoot">
-            <option value="Right">Right</option>
-            <option value="Left">Left</option>
-          </select>
-
-          <button
-            id="createPlayerButton"
-            class="primary"
-            type="button">
-            BEGIN JOURNEY
-          </button>
+            <button id="createPlayerButton"
+                    class="primary"
+                    type="button">
+                BEGIN JOURNEY
+            </button>
 
         </div>
 
         <div class="creation-preview">
 
-          <div class="player-silhouette">
-            <div class="silhouette-number">XI</div>
-          </div>
+            <div class="player-silhouette">
+                <div class="silhouette-number">XI</div>
+            </div>
 
-          <div class="preview-name" id="previewName">
-            YOUR PLAYER
-          </div>
+            <div class="preview-name" id="previewName">
+                YOUR PLAYER
+            </div>
 
-          <div class="preview-position" id="previewPosition">
-            ST
-          </div>
+            <div class="preview-position" id="previewPosition">
+                ST
+            </div>
 
         </div>
 
-      </div>
+    </div>
 
-    </section>
+</section>
 
 
-    <!-- =======================================
-         CLUB SELECTION
-    ======================================== -->
+<!-- ================= CLUB SELECT ================= -->
 
-    <section id="clubSelectScreen" class="screen">
+<section id="clubSelectScreen" class="screen">
 
-      <div class="page-header">
+    <div class="page-header">
 
         <div>
-          <span class="eyebrow">THE FIRST DECISION</span>
-          <h2>CHOOSE YOUR ACADEMY</h2>
+            <span class="eyebrow">THE FIRST DECISION</span>
+            <h2>CHOOSE YOUR ACADEMY</h2>
         </div>
 
         <p>
-          Every club offers a different path.
+            Every club offers a different path.
         </p>
 
-      </div>
+    </div>
 
-      <div id="academyList" class="club-list"></div>
+    <div id="academyList" class="club-list"></div>
 
-    </section>
+</section>
 
 
-    <!-- =======================================
-         CAREER
-    ======================================== -->
+<!-- ================= CAREER ================= -->
 
-    <section id="careerScreen" class="screen">
+<section id="careerScreen" class="screen">
 
-      <div class="career-header">
+    <div class="career-header">
 
         <div>
+            <span id="careerChapter" class="eyebrow">
+                CAREER
+            </span>
 
-          <span id="careerChapter" class="eyebrow">
-            CAREER
-          </span>
+            <h2 id="careerPlayerName">
+                PLAYER
+            </h2>
 
-          <h2 id="careerPlayerName">
-            PLAYER
-          </h2>
-
-          <div id="careerClub">
-            PROJECT XI ACADEMY
-          </div>
-
+            <div id="careerClub">
+                PROJECT XI ACADEMY
+            </div>
         </div>
 
         <div class="career-rating">
-
-          <span>OVR</span>
-
-          <strong id="careerRating">
-            60
-          </strong>
-
+            <span>OVR</span>
+            <strong id="careerRating">60</strong>
         </div>
 
-      </div>
+    </div>
 
 
-      <!-- =====================================
-           CAREER STATS
-      ====================================== -->
-
-      <div class="career-stats">
+    <div class="career-stats">
 
         <div class="stat">
-          <span>AGE</span>
-          <strong id="careerAge">16</strong>
+            <span>AGE</span>
+            <strong id="careerAge">16</strong>
         </div>
 
         <div class="stat">
-          <span>FITNESS</span>
-          <strong id="careerFitness">100</strong>
+            <span>FITNESS</span>
+            <strong id="careerFitness">100</strong>
         </div>
 
         <div class="stat">
-          <span>FORM</span>
-          <strong id="careerForm">50</strong>
+            <span>FORM</span>
+            <strong id="careerForm">50</strong>
         </div>
 
         <div class="stat">
-          <span>GOALS</span>
-          <strong id="careerGoals">0</strong>
+            <span>GOALS</span>
+            <strong id="careerGoals">0</strong>
         </div>
 
         <div class="stat">
-          <span>ASSISTS</span>
-          <strong id="careerAssists">0</strong>
+            <span>ASSISTS</span>
+            <strong id="careerAssists">0</strong>
         </div>
 
         <div class="stat">
-          <span>REPUTATION</span>
-          <strong id="careerReputation">0</strong>
+            <span>REPUTATION</span>
+            <strong id="careerReputation">0</strong>
         </div>
 
-      </div>
+    </div>
 
 
-      <!-- =====================================
-           CAREER GRID
-      ====================================== -->
-
-      <div class="career-grid">
+    <div class="career-grid">
 
 
         <!-- CALENDAR -->
 
         <div class="panel calendar-panel">
 
-          <div class="panel-header">
+            <div class="panel-header">
 
-            <div>
-              <span class="eyebrow">YOUR WEEK</span>
-              <h3>CAREER CALENDAR</h3>
+                <div>
+                    <span class="eyebrow">YOUR WEEK</span>
+                    <h3>CAREER CALENDAR</h3>
+                </div>
+
+                <div id="calendarDate">
+                    WEEK 01
+                </div>
+
             </div>
 
-            <div id="calendarDate">
-              WEEK 01
+            <div id="calendarList"
+                 class="calendar-list">
             </div>
 
-          </div>
+            <div id="calendarStatus"
+                 class="calendar-status">
+                DAY 1 • MONDAY
+            </div>
 
-          <div id="calendarList" class="calendar-list"></div>
-<div id="calendarStatus" class="calendar-status">
-  DAY 1 • MONDAY
-</div>
-          <button
-            id="advanceDayButton"
-            class="primary wide"
-            type="button">
-            ADVANCE DAY
-          </button>
+            <button id="advanceDayButton"
+                    class="primary wide"
+                    type="button">
+                ADVANCE DAY
+            </button>
 
         </div>
 
 
-        <!-- PLAYER PROFILE -->
+        <!-- PROFILE -->
 
         <div class="panel profile-panel">
 
-          <div class="panel-header">
-            <div>
-              <span class="eyebrow">PLAYER</span>
-              <h3>PROFILE</h3>
-            </div>
-          </div>
+            <div class="panel-header">
 
-          <div class="profile-main">
-
-            <div class="profile-number">
-              <span id="profileRating">60</span>
-            </div>
-
-            <div>
-
-              <h3 id="profileName">
-                PLAYER
-              </h3>
-
-              <p id="profilePosition">
-                ST
-              </p>
-
-              <p id="profileClub">
-                PROJECT XI ACADEMY
-              </p>
+                <div>
+                    <span class="eyebrow">PLAYER</span>
+                    <h3>PROFILE</h3>
+                </div>
 
             </div>
 
-          </div>
+            <div class="profile-main">
 
-          <div class="potential-bar">
+                <div class="profile-number">
+                    <span id="profileRating">60</span>
+                </div>
 
-            <div class="bar-label">
-              <span>POTENTIAL</span>
-              <strong id="potentialValue">75</strong>
+                <div>
+                    <h3 id="profileName">
+                        PLAYER
+                    </h3>
+
+                    <p id="profilePosition">
+                        ST
+                    </p>
+
+                    <p id="profileClub">
+                        PROJECT XI ACADEMY
+                    </p>
+                </div>
+
             </div>
 
-            <div class="bar">
-              <div
-                id="potentialFill"
-                class="bar-fill"
-                style="width: 50%;">
-              </div>
-            </div>
+            <div class="potential-bar">
 
-          </div>
+                <div class="bar-label">
+                    <span>POTENTIAL</span>
+                    <strong id="potentialValue">75</strong>
+                </div>
+
+                <div class="bar">
+                    <div id="potentialFill"
+                         class="bar-fill"
+                         style="width:50%">
+                    </div>
+                </div>
+
+            </div>
 
         </div>
 
 
-        <!-- CAREER LOG -->
+        <!-- LOG -->
 
         <div class="panel log-panel">
 
-          <div class="panel-header">
+            <div class="panel-header">
 
-            <div>
-              <span class="eyebrow">YOUR STORY</span>
-              <h3>CAREER LOG</h3>
+                <div>
+                    <span class="eyebrow">
+                        YOUR STORY
+                    </span>
+
+                    <h3>CAREER LOG</h3>
+                </div>
+
             </div>
 
-          </div>
-
-          <div
-            id="careerLog"
-            class="career-log">
-          </div>
+            <div id="careerLog"
+                 class="career-log">
+            </div>
 
         </div>
 
 
-        <!-- WORLD FOOTBALL -->
+        <!-- WORLD -->
 
         <div class="panel world-panel">
 
-          <div class="panel-header">
+            <div class="panel-header">
 
-            <div>
-              <span class="eyebrow">LIVE WORLD</span>
-              <h3>WHAT'S HAPPENING</h3>
+                <div>
+                    <span class="eyebrow">
+                        LIVE WORLD
+                    </span>
+
+                    <h3>WHAT'S HAPPENING</h3>
+                </div>
+
+                <span class="live-dot">
+                    LIVE
+                </span>
+
             </div>
 
-            <span class="live-dot">
-              LIVE
-            </span>
-
-          </div>
-
-          <div
-            id="worldFeed"
-            class="world-feed">
-          </div>
+            <div id="worldFeed"
+                 class="world-feed">
+            </div>
 
         </div>
 
-      </div>
+    </div>
 
 
-      <!-- =====================================
-           CAREER ACTIONS
-      ====================================== -->
+    <div class="action-strip">
 
-      <div class="action-strip">
-
-        <button
-          id="trainingButton"
-          class="secondary"
-          type="button">
-          TRAIN
+        <button id="trainingButton"
+                class="secondary"
+                type="button">
+            TRAIN
         </button>
 
-        <button
-          id="restButton"
-          class="secondary"
-          type="button">
-          REST
+        <button id="restButton"
+                class="secondary"
+                type="button">
+            REST
         </button>
 
-        <button
-          id="matchButton"
-          class="primary"
-          type="button">
-          MATCHDAY
+        <button id="matchButton"
+                class="primary"
+                type="button">
+            MATCHDAY
         </button>
 
-        <button
-          id="transferButton"
-          class="secondary"
-          type="button">
-          TRANSFERS
+        <button id="transferButton"
+                class="secondary"
+                type="button">
+            TRANSFERS
         </button>
 
-        <button
-          id="careerAwardsButton"
-          class="secondary"
-          type="button">
-          AWARDS
+        <button id="careerAwardsButton"
+                class="secondary"
+                type="button">
+            AWARDS
         </button>
 
-        <button
-          id="retireButton"
-          class="danger"
-          type="button">
-          RETIRE
+        <button id="retireButton"
+                class="danger"
+                type="button">
+            RETIRE
         </button>
 
-      </div>
+    </div>
 
-    </section>
+</section>
 
 
-    <!-- =======================================
-         MATCHDAY
-    ======================================== -->
+<!-- ================= MATCH ================= -->
 
-    <section id="matchScreen" class="screen">
+<section id="matchScreen" class="screen">
 
-      <div class="match-header">
+    <div class="match-header">
 
         <span class="eyebrow">
-          MATCHDAY
+            MATCHDAY
         </span>
 
         <h2 id="matchCompetition">
-          LEAGUE MATCH
+            LEAGUE MATCH
         </h2>
 
-      </div>
+    </div>
 
-      <div class="match-stadium">
+    <div class="match-stadium">
 
         <div class="match-team">
 
-          <span id="homeTeam">
-            PROJECT XI FC
-          </span>
+            <span id="homeTeam">
+                PROJECT XI FC
+            </span>
 
-          <strong id="homeScore">
-            0
-          </strong>
+            <strong id="homeScore">
+                0
+            </strong>
 
         </div>
 
         <div class="match-time">
 
-          <span id="matchMinute">
-            00'
-          </span>
+            <span id="matchMinute">
+                00'
+            </span>
 
-          <div class="match-status">
-            LIVE
-          </div>
+            <div class="match-status">
+                LIVE
+            </div>
 
         </div>
 
         <div class="match-team">
 
-          <strong id="awayScore">
-            0
-          </strong>
+            <strong id="awayScore">
+                0
+            </strong>
 
-          <span id="awayTeam">
-            CLUB DE ADERIS
-          </span>
+            <span id="awayTeam">
+                CLUB DE ADERIS
+            </span>
 
         </div>
 
-      </div>
+    </div>
 
-      <div class="match-controls">
 
-        <button
-          id="matchAttackButton"
-          class="primary"
-          type="button">
-          ATTACK
+    <div class="match-controls">
+
+        <button id="matchAttackButton"
+                class="primary"
+                type="button">
+            ATTACK
         </button>
 
-        <button
-          id="matchPassButton"
-          class="secondary"
-          type="button">
-          CREATE CHANCE
+        <button id="matchPassButton"
+                class="secondary"
+                type="button">
+            CREATE CHANCE
         </button>
 
-        <button
-          id="matchDefendButton"
-          class="secondary"
-          type="button">
-          HOLD POSITION
+        <button id="matchDefendButton"
+                class="secondary"
+                type="button">
+            HOLD POSITION
         </button>
 
-      </div>
+    </div>
 
-      <div
-        id="matchCommentary"
-        class="match-commentary">
-      </div>
+    <div id="matchCommentary"
+         class="match-commentary">
+    </div>
 
-    </section>
+</section>
 
 
-    <!-- =======================================
-         CONTRACT
-    ======================================== -->
+<!-- ================= CONTRACT ================= -->
 
-    <section id="contractScreen" class="screen">
+<section id="contractScreen" class="screen">
 
-      <div class="big-moment">
+    <div class="big-moment">
 
         <span class="eyebrow">
-          CAREER MILESTONE
+            CAREER MILESTONE
         </span>
 
         <h2>
-          PROFESSIONAL CONTRACT
+            PROFESSIONAL CONTRACT
         </h2>
 
         <p id="contractClubName">
-          PROJECT XI FC
+            PROJECT XI FC
         </p>
 
         <div class="contract-details">
 
-          <div>
-            <span>SALARY</span>
-            <strong id="contractSalary">€0</strong>
-          </div>
+            <div>
+                <span>SALARY</span>
+                <strong id="contractSalary">
+                    €0
+                </strong>
+            </div>
 
-          <div>
-            <span>CONTRACT</span>
-            <strong id="contractYears">3 YEARS</strong>
-          </div>
+            <div>
+                <span>CONTRACT</span>
+                <strong id="contractYears">
+                    3 YEARS
+                </strong>
+            </div>
 
-          <div>
-            <span>TRANSFER VALUE</span>
-            <strong id="contractValue">€0</strong>
-          </div>
+            <div>
+                <span>TRANSFER VALUE</span>
+                <strong id="contractValue">
+                    €0
+                </strong>
+            </div>
 
         </div>
 
-        <button
-          id="signContractButton"
-          class="primary"
-          type="button">
-          SIGN CONTRACT
+        <button id="signContractButton"
+                class="primary"
+                type="button">
+            SIGN CONTRACT
         </button>
 
-      </div>
+    </div>
 
-    </section>
+</section>
 
 
-    <!-- =======================================
-         TRANSFERS
-    ======================================== -->
+<!-- ================= TRANSFERS ================= -->
 
-    <section id="transferScreen" class="screen">
+<section id="transferScreen" class="screen">
 
-      <div class="page-header">
+    <div class="page-header">
 
         <div>
-          <span class="eyebrow">TRANSFER MARKET</span>
-          <h2>CLUB INTEREST</h2>
+            <span class="eyebrow">
+                TRANSFER MARKET
+            </span>
+
+            <h2>
+                CLUB INTEREST
+            </h2>
         </div>
 
-      </div>
+    </div>
 
-      <div class="transfer-layout">
+    <div class="transfer-layout">
 
         <div class="panel">
 
-          <div class="panel-header">
-            <h3>OFFERS</h3>
-          </div>
+            <div class="panel-header">
+                <h3>OFFERS</h3>
+            </div>
 
-          <div
-            id="transferOffers"
-            class="transfer-offers">
-          </div>
+            <div id="transferOffers"
+                 class="transfer-offers">
+            </div>
 
         </div>
 
         <div class="panel">
 
-          <div class="panel-header">
-            <h3>NEGOTIATION</h3>
-          </div>
+            <div class="panel-header">
+                <h3>NEGOTIATION</h3>
+            </div>
 
-          <div id="transferNegotiation">
-
-            <p>
-              Select a transfer offer to negotiate.
-            </p>
-
-          </div>
+            <div id="transferNegotiation">
+                <p>
+                    Select a transfer offer to negotiate.
+                </p>
+            </div>
 
         </div>
 
-      </div>
+    </div>
 
-      <button
-        id="transferBackButton"
-        class="secondary"
-        type="button">
+    <button id="transferBackButton"
+            class="secondary"
+            type="button">
         BACK TO CAREER
-      </button>
+    </button>
 
-    </section>
+</section>
 
 
-    <!-- =======================================
-         TRANSFER NEGOTIATION
-    ======================================== -->
+<!-- ================= NEGOTIATION ================= -->
 
-    <section id="negotiationScreen" class="screen">
+<section id="negotiationScreen" class="screen">
 
-      <div class="big-moment">
+    <div class="big-moment">
 
         <span class="eyebrow">
-          NEGOTIATION ROOM
+            NEGOTIATION ROOM
         </span>
 
         <h2 id="negotiationClub">
-          CLUB
+            CLUB
         </h2>
 
         <div class="negotiation-box">
 
-          <div>
-            <span>OFFER</span>
-            <strong id="negotiationOffer">
-              €0
-            </strong>
-          </div>
+            <div>
+                <span>OFFER</span>
+                <strong id="negotiationOffer">
+                    €0
+                </strong>
+            </div>
 
-          <div>
-            <span>YOUR ASKING PRICE</span>
-            <strong id="negotiationCurrentValue">
-              €0
-            </strong>
-          </div>
+            <div>
+                <span>YOUR ASKING PRICE</span>
+                <strong id="negotiationCurrentValue">
+                    €0
+                </strong>
+            </div>
 
         </div>
 
         <label for="transferCounter">
-          COUNTER OFFER
+            COUNTER OFFER
         </label>
 
-        <input
-          id="transferCounter"
-          type="number"
-          min="0"
-          step="100000"
-          placeholder="Enter transfer fee">
+        <input id="transferCounter"
+               type="number"
+               min="0"
+               step="100000"
+               placeholder="Enter transfer fee">
 
         <div class="action-strip">
 
-          <button
-            id="counterOfferButton"
-            class="primary"
-            type="button">
-            SEND COUNTER
-          </button>
+            <button id="counterOfferButton"
+                    class="primary"
+                    type="button">
+                SEND COUNTER
+            </button>
 
-          <button
-            id="acceptTransferButton"
-            class="secondary"
-            type="button">
-            ACCEPT
-          </button>
+            <button id="acceptTransferButton"
+                    class="secondary"
+                    type="button">
+                ACCEPT
+            </button>
 
-          <button
-            id="rejectTransferButton"
-            class="danger"
-            type="button">
-            REJECT
-          </button>
+            <button id="rejectTransferButton"
+                    class="danger"
+                    type="button">
+                REJECT
+            </button>
 
         </div>
 
-        <div
-          id="negotiationMessage"
-          class="career-log">
+        <div id="negotiationMessage"
+             class="career-log">
         </div>
 
-      </div>
+    </div>
 
-    </section>
+</section>
 
 
-    <!-- =======================================
-         AWARDS
-    ======================================== -->
+<!-- ================= AWARDS ================= -->
 
-    <section id="awardsScreen" class="screen">
+<section id="awardsScreen" class="screen">
 
-      <div class="page-header">
+    <div class="page-header">
 
         <div>
-          <span class="eyebrow">HONOURS</span>
-          <h2>YOUR TROPHY CABINET</h2>
+            <span class="eyebrow">
+                HONOURS
+            </span>
+
+            <h2>
+                YOUR TROPHY CABINET
+            </h2>
         </div>
 
-      </div>
+    </div>
 
-      <div class="awards-grid">
-
-        <div class="award">
-
-          <span class="award-icon">🏆</span>
-
-          <h3>PLAYER OF THE YEAR</h3>
-
-          <p id="playerOfYearStatus">
-            Not won
-          </p>
-
-        </div>
+    <div class="awards-grid">
 
         <div class="award">
-
-          <span class="award-icon">⚽</span>
-
-          <h3>GOLDEN BOOT</h3>
-
-          <p id="goldenBootStatus">
-            Not won
-          </p>
-
+            <span class="award-icon">🏆</span>
+            <h3>PLAYER OF THE YEAR</h3>
+            <p id="playerOfYearStatus">
+                Not won
+            </p>
         </div>
 
         <div class="award">
-
-          <span class="award-icon">👑</span>
-
-          <h3>BALLON D'OR</h3>
-
-          <p id="ballonDorStatus">
-            Not won
-          </p>
-
+            <span class="award-icon">⚽</span>
+            <h3>GOLDEN BOOT</h3>
+            <p id="goldenBootStatus">
+                Not won
+            </p>
         </div>
 
         <div class="award">
-
-          <span class="award-icon">🏆</span>
-
-          <h3>TEAM TROPHIES</h3>
-
-          <p id="teamTrophiesStatus">
-            0
-          </p>
-
+            <span class="award-icon">👑</span>
+            <h3>BALLON D'OR</h3>
+            <p id="ballonDorStatus">
+                Not won
+            </p>
         </div>
 
-      </div>
+        <div class="award">
+            <span class="award-icon">🏆</span>
+            <h3>TEAM TROPHIES</h3>
+            <p id="teamTrophiesStatus">
+                0
+            </p>
+        </div>
 
-      <button
-        id="awardsBackButton"
-        class="secondary"
-        type="button">
+    </div>
+
+    <button id="awardsBackButton"
+            class="secondary"
+            type="button">
         BACK
-      </button>
+    </button>
 
-    </section>
+</section>
 
 
-    <!-- =======================================
-         RETIREMENT
-    ======================================== -->
+<!-- ================= RETIREMENT ================= -->
 
-    <section id="retirementScreen" class="screen">
+<section id="retirementScreen" class="screen">
 
-      <div class="retirement-screen">
+    <div class="retirement-screen">
 
         <span class="eyebrow">
-          THE FINAL WHISTLE
+            THE FINAL WHISTLE
         </span>
 
         <h2>
-          YOUR PLAYING CAREER IS OVER.
+            YOUR PLAYING CAREER IS OVER.
         </h2>
 
         <p id="retirementSummary">
-          The stadium lights fade.
+            The stadium lights fade.
         </p>
 
         <div class="retirement-stats">
 
-          <div>
-            <span>GOALS</span>
-            <strong id="retireGoals">0</strong>
-          </div>
+            <div>
+                <span>GOALS</span>
+                <strong id="retireGoals">0</strong>
+            </div>
 
-          <div>
-            <span>ASSISTS</span>
-            <strong id="retireAssists">0</strong>
-          </div>
+            <div>
+                <span>ASSISTS</span>
+                <strong id="retireAssists">0</strong>
+            </div>
 
-          <div>
-            <span>TROPHIES</span>
-            <strong id="retireTrophies">0</strong>
-          </div>
+            <div>
+                <span>TROPHIES</span>
+                <strong id="retireTrophies">0</strong>
+            </div>
 
-          <div>
-            <span>CAREER EARNINGS</span>
-            <strong id="retireMoney">€0</strong>
-          </div>
+            <div>
+                <span>CAREER EARNINGS</span>
+                <strong id="retireMoney">€0</strong>
+            </div>
 
         </div>
 
-        <button
-          id="beginLegacyButton"
-          class="primary"
-          type="button">
-          BEGIN YOUR LEGACY
+        <button id="beginLegacyButton"
+                class="primary"
+                type="button">
+            BEGIN YOUR LEGACY
         </button>
 
-      </div>
+    </div>
 
-    </section>
+</section>
 
 
-    <!-- =======================================
-         LEGACY
-    ======================================== -->
+<!-- ================= LEGACY ================= -->
 
-    <section id="legacyScreen" class="screen">
+<section id="legacyScreen" class="screen">
 
-      <div class="page-header">
+    <div class="page-header">
 
         <div>
-          <span class="eyebrow">AFTER FOOTBALL</span>
-          <h2>LEGACY</h2>
+            <span class="eyebrow">
+                AFTER FOOTBALL
+            </span>
+
+            <h2>
+                LEGACY
+            </h2>
         </div>
 
         <p>
-          The career ended. The story didn't.
+            The career ended. The story didn't.
         </p>
 
-      </div>
+    </div>
 
-      <div class="legacy-options">
+    <div class="legacy-options">
 
         <div class="legacy-option">
 
-          <h3>CREATE A CLUB</h3>
+            <h3>
+                CREATE A CLUB
+            </h3>
 
-          <p>
-            Build your own football club from nothing.
-          </p>
+            <p>
+                Build your own football club from nothing.
+            </p>
 
-          <button
-            id="createClubButton"
-            class="primary"
-            type="button">
-            CREATE CLUB
-          </button>
+            <button id="createClubButton"
+                    class="primary"
+                    type="button">
+                CREATE CLUB
+            </button>
 
         </div>
 
         <div class="legacy-option">
 
-          <h3>INVEST</h3>
+            <h3>
+                INVEST
+            </h3>
 
-          <p>
-            Use your wealth to build your football empire.
-          </p>
+            <p>
+                Use your wealth to build your football empire.
+            </p>
 
-          <button
-            id="legacyInvestButton"
-            class="secondary"
-            type="button">
-            INVEST
-          </button>
+            <button id="legacyInvestButton"
+                    class="secondary"
+                    type="button">
+                INVEST
+            </button>
 
         </div>
 
-      </div>
+    </div>
 
-    </section>
+</section>
 
 
-    <!-- =======================================
-         CREATE CLUB
-    ======================================== -->
+<!-- ================= CREATE CLUB ================= -->
 
-    <section id="clubCreateScreen" class="screen">
+<section id="clubCreateScreen" class="screen">
 
-      <div class="page-header">
+    <div class="page-header">
 
         <div>
-          <span class="eyebrow">FOUNDATION</span>
-          <h2>CREATE YOUR CLUB</h2>
+            <span class="eyebrow">
+                FOUNDATION
+            </span>
+
+            <h2>
+                CREATE YOUR CLUB
+            </h2>
         </div>
 
-      </div>
+    </div>
 
-      <div class="club-create-layout">
+    <div class="club-create-layout">
 
         <div class="creation-panel">
 
-          <label for="newClubName">
-            CLUB NAME
-          </label>
+            <label for="newClubName">
+                CLUB NAME
+            </label>
 
-          <input
-            id="newClubName"
-            type="text"
-            maxlength="30"
-            placeholder="Enter club name">
+            <input id="newClubName"
+                   type="text"
+                   maxlength="30"
+                   placeholder="Enter club name">
 
-          <label for="newClubCity">
-            CITY
-          </label>
+            <label for="newClubCity">
+                CITY
+            </label>
 
-          <input
-            id="newClubCity"
-            type="text"
-            maxlength="30"
-            placeholder="Enter city">
+            <input id="newClubCity"
+                   type="text"
+                   maxlength="30"
+                   placeholder="Enter city">
 
-          <label for="newClubMotto">
-            CLUB MOTTO
-          </label>
+            <label for="newClubMotto">
+                CLUB MOTTO
+            </label>
 
-          <input
-            id="newClubMotto"
-            type="text"
-            maxlength="50"
-            placeholder="Your club's motto">
+            <input id="newClubMotto"
+                   type="text"
+                   maxlength="50"
+                   placeholder="Your club's motto">
 
-          <label for="newClubStadium">
-            STADIUM NAME
-          </label>
+            <label for="newClubStadium">
+                STADIUM NAME
+            </label>
 
-          <input
-            id="newClubStadium"
-            type="text"
-            maxlength="35"
-            placeholder="Name your stadium">
+            <input id="newClubStadium"
+                   type="text"
+                   maxlength="35"
+                   placeholder="Name your stadium">
 
-          <button
-            id="foundClubButton"
-            class="primary"
-            type="button">
-            FOUND CLUB
-          </button>
+            <button id="foundClubButton"
+                    class="primary"
+                    type="button">
+                FOUND CLUB
+            </button>
 
         </div>
 
         <div class="club-preview">
 
-          <div class="club-crest">
-            XI
-          </div>
+            <div class="club-crest">
+                XI
+            </div>
 
-          <h3 id="clubPreviewName">
-            YOUR CLUB
-          </h3>
+            <h3 id="clubPreviewName">
+                YOUR CLUB
+            </h3>
 
-          <p id="clubPreviewCity">
-            YOUR CITY
-          </p>
+            <p id="clubPreviewCity">
+                YOUR CITY
+            </p>
 
         </div>
 
-      </div>
+    </div>
 
-    </section>
+</section>
 
 
-    <!-- =======================================
-         OWNER MODE
-    ======================================== -->
+<!-- ================= OWNER ================= -->
 
-    <section id="ownerScreen" class="screen">
+<section id="ownerScreen" class="screen">
 
-      <div class="owner-header">
+    <div class="owner-header">
 
         <div>
 
-          <span class="eyebrow">
-            CLUB OWNER
-          </span>
+            <span class="eyebrow">
+                CLUB OWNER
+            </span>
 
-          <h2 id="ownerClubName">
-            YOUR CLUB
-          </h2>
+            <h2 id="ownerClubName">
+                YOUR CLUB
+            </h2>
 
-          <p id="ownerClubMotto">
-            BUILD THE LEGACY
-          </p>
+            <p id="ownerClubMotto">
+                BUILD THE LEGACY
+            </p>
 
         </div>
 
         <div class="owner-funds">
 
-          <span>FUNDS</span>
+            <span>FUNDS</span>
 
-          <strong id="ownerFunds">
-            €100,000
-          </strong>
+            <strong id="ownerFunds">
+                €100,000
+            </strong>
 
         </div>
 
-      </div>
+    </div>
 
 
-      <!-- =====================================
-           OWNER STATS
-      ====================================== -->
-
-      <div class="owner-stats">
+    <div class="owner-stats">
 
         <div class="stat">
-          <span>CLUB RATING</span>
-          <strong id="ownerRating">40</strong>
+            <span>CLUB RATING</span>
+            <strong id="ownerRating">40</strong>
         </div>
 
         <div class="stat">
-          <span>REPUTATION</span>
-          <strong id="ownerReputation">10</strong>
+            <span>REPUTATION</span>
+            <strong id="ownerReputation">10</strong>
         </div>
 
         <div class="stat">
-          <span>STADIUM</span>
-          <strong id="ownerStadiumLevel">1</strong>
+            <span>STADIUM</span>
+            <strong id="ownerStadiumLevel">1</strong>
         </div>
 
         <div class="stat">
-          <span>YOUTH</span>
-          <strong id="ownerYouthLevel">1</strong>
+            <span>YOUTH</span>
+            <strong id="ownerYouthLevel">1</strong>
         </div>
 
-      </div>
+    </div>
 
 
-      <!-- =====================================
-           OWNER GRID
-      ====================================== -->
-
-      <div class="owner-grid">
-
-
-        <!-- SQUAD -->
+    <div class="owner-grid">
 
         <div class="panel owner-panel">
 
-          <div class="panel-header">
-
-            <div>
-              <span class="eyebrow">SQUAD</span>
-              <h3>PLAYERS</h3>
+            <div class="panel-header">
+                <span class="eyebrow">SQUAD</span>
+                <h3>PLAYERS</h3>
             </div>
 
-          </div>
+            <div id="ownerSquad"
+                 class="squad-list">
+            </div>
 
-          <div
-            id="ownerSquad"
-            class="squad-list">
-          </div>
-
-          <button
-            id="ownerTransfersButton"
-            class="secondary wide"
-            type="button">
-            TRANSFER MARKET
-          </button>
+            <button id="ownerTransfersButton"
+                    class="secondary wide"
+                    type="button">
+                TRANSFER MARKET
+            </button>
 
         </div>
 
 
-        <!-- STARTING XI -->
-
         <div class="panel owner-panel">
 
-          <div class="panel-header">
-
-            <div>
-              <span class="eyebrow">TACTICS</span>
-              <h3>STARTING XI</h3>
+            <div class="panel-header">
+                <span class="eyebrow">TACTICS</span>
+                <h3>STARTING XI</h3>
             </div>
 
-          </div>
-
-          <div
-            id="startingXI"
-            class="starting-xi">
-          </div>
+            <div id="startingXI"
+                 class="starting-xi">
+            </div>
 
         </div>
 
 
-        <!-- CLUB DEVELOPMENT -->
-
         <div class="panel owner-panel">
 
-          <div class="panel-header">
-
-            <div>
-              <span class="eyebrow">DEVELOPMENT</span>
-              <h3>BUILD THE CLUB</h3>
+            <div class="panel-header">
+                <span class="eyebrow">DEVELOPMENT</span>
+                <h3>BUILD THE CLUB</h3>
             </div>
 
-          </div>
+            <div class="upgrade-list">
 
-          <div class="upgrade-list">
+                <button id="upgradeStadiumButton"
+                        class="upgrade-button"
+                        type="button">
 
-            <button
-              id="upgradeStadiumButton"
-              class="upgrade-button"
-              type="button">
+                    <span>
+                        STADIUM
+                        <small>
+                            Increase capacity and revenue
+                        </small>
+                    </span>
 
-              <span>
-                STADIUM
-                <small>Increase capacity and revenue</small>
-              </span>
+                    <strong id="stadiumUpgradeCost">
+                        €25,000
+                    </strong>
 
-              <strong id="stadiumUpgradeCost">
-                €25,000
-              </strong>
+                </button>
 
-            </button>
 
-            <button
-              id="upgradeYouthButton"
-              class="upgrade-button"
-              type="button">
+                <button id="upgradeYouthButton"
+                        class="upgrade-button"
+                        type="button">
 
-              <span>
-                YOUTH ACADEMY
-                <small>Find better young players</small>
-              </span>
+                    <span>
+                        YOUTH ACADEMY
+                        <small>
+                            Find better young players
+                        </small>
+                    </span>
 
-              <strong id="youthUpgradeCost">
-                €20,000
-              </strong>
+                    <strong id="youthUpgradeCost">
+                        €20,000
+                    </strong>
 
-            </button>
+                </button>
 
-            <button
-              id="upgradeTrainingButton"
-              class="upgrade-button"
-              type="button">
 
-              <span>
-                TRAINING CENTRE
-                <small>Improve player development</small>
-              </span>
+                <button id="upgradeTrainingButton"
+                        class="upgrade-button"
+                        type="button">
 
-              <strong id="trainingUpgradeCost">
-                €30,000
-              </strong>
+                    <span>
+                        TRAINING CENTRE
+                        <small>
+                            Improve player development
+                        </small>
+                    </span>
 
-            </button>
+                    <strong id="trainingUpgradeCost">
+                        €30,000
+                    </strong>
 
-            <button
-              id="hireStaffButton"
-              class="upgrade-button"
-              type="button">
+                </button>
 
-              <span>
-                STAFF
-                <small>Improve club operations</small>
-              </span>
 
-              <strong id="staffUpgradeCost">
-                €15,000
-              </strong>
+                <button id="hireStaffButton"
+                        class="upgrade-button"
+                        type="button">
 
-            </button>
+                    <span>
+                        STAFF
+                        <small>
+                            Improve club operations
+                        </small>
+                    </span>
 
-          </div>
+                    <strong id="staffUpgradeCost">
+                        €15,000
+                    </strong>
+
+                </button>
+
+            </div>
 
         </div>
 
 
-        <!-- WORLD FOOTBALL -->
-
         <div class="panel owner-panel">
 
-          <div class="panel-header">
+            <div class="panel-header">
 
-            <div>
-              <span class="eyebrow">WORLD FOOTBALL</span>
-              <h3>LIVE NEWS</h3>
+                <span class="eyebrow">
+                    WORLD FOOTBALL
+                </span>
+
+                <h3>
+                    LIVE NEWS
+                </h3>
+
+                <span class="live-dot">
+                    LIVE
+                </span>
+
             </div>
 
-            <span class="live-dot">
-              LIVE
+            <div id="ownerWorldFeed"
+                 class="world-feed">
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="action-strip">
+
+        <button id="scoutButton"
+                class="primary"
+                type="button">
+            SCOUT PLAYER
+        </button>
+
+        <button id="youthAcademyButton"
+                class="secondary"
+                type="button">
+            YOUTH ACADEMY
+        </button>
+
+        <button id="ownerMatchButton"
+                class="primary"
+                type="button">
+            MATCHDAY
+        </button>
+
+        <button id="ownerFinanceButton"
+                class="secondary"
+                type="button">
+            FINANCES
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ================= SCOUT ================= -->
+
+<section id="scoutScreen" class="screen">
+
+    <div class="page-header">
+
+        <div>
+            <span class="eyebrow">
+                SCOUTING NETWORK
             </span>
 
-          </div>
-
-          <div
-            id="ownerWorldFeed"
-            class="world-feed">
-          </div>
-
+            <h2>
+                YOUNG TALENT
+            </h2>
         </div>
 
-      </div>
+    </div>
 
+    <div id="scoutResults"
+         class="scout-results">
+    </div>
 
-      <!-- =====================================
-           OWNER ACTIONS
-      ====================================== -->
-
-      <div class="action-strip">
-
-        <button
-          id="scoutButton"
-          class="primary"
-          type="button">
-          SCOUT PLAYER
-        </button>
-
-        <button
-          id="youthAcademyButton"
-          class="secondary"
-          type="button">
-          YOUTH ACADEMY
-        </button>
-
-        <button
-          id="ownerMatchButton"
-          class="primary"
-          type="button">
-          MATCHDAY
-        </button>
-
-        <button
-          id="ownerFinanceButton"
-          class="secondary"
-          type="button">
-          FINANCES
-        </button>
-
-      </div>
-
-    </section>
-
-
-    <!-- =======================================
-         SCOUTING
-    ======================================== -->
-
-    <section id="scoutScreen" class="screen">
-
-      <div class="page-header">
-
-        <div>
-          <span class="eyebrow">SCOUTING NETWORK</span>
-          <h2>YOUNG TALENT</h2>
-        </div>
-
-      </div>
-
-      <div
-        id="scoutResults"
-        class="scout-results">
-      </div>
-
-      <button
-        id="scoutBackButton"
-        class="secondary"
-        type="button">
+    <button id="scoutBackButton"
+            class="secondary"
+            type="button">
         BACK TO CLUB
-      </button>
+    </button>
 
-    </section>
+</section>
 
 
-    <!-- =======================================
-         OWNER FINANCES
-    ======================================== -->
+<!-- ================= FINANCES ================= -->
 
-    <section id="financeScreen" class="screen">
+<section id="financeScreen" class="screen">
 
-      <div class="page-header">
+    <div class="page-header">
 
         <div>
-          <span class="eyebrow">CLUB MANAGEMENT</span>
-          <h2>FINANCES</h2>
+            <span class="eyebrow">
+                CLUB MANAGEMENT
+            </span>
+
+            <h2>
+                FINANCES
+            </h2>
+
         </div>
 
-      </div>
+    </div>
 
-      <div class="finance-grid">
-
-        <div class="stat">
-          <span>AVAILABLE FUNDS</span>
-          <strong id="financeFunds">€0</strong>
-        </div>
+    <div class="finance-grid">
 
         <div class="stat">
-          <span>WEEKLY REVENUE</span>
-          <strong id="financeRevenue">€0</strong>
-        </div>
-
-        <div class="stat">
-          <span>WEEKLY WAGES</span>
-          <strong id="financeWages">€0</strong>
+            <span>AVAILABLE FUNDS</span>
+            <strong id="financeFunds">€0</strong>
         </div>
 
         <div class="stat">
-          <span>NET BALANCE</span>
-          <strong id="financeBalance">€0</strong>
+            <span>WEEKLY REVENUE</span>
+            <strong id="financeRevenue">€0</strong>
         </div>
 
-      </div>
+        <div class="stat">
+            <span>WEEKLY WAGES</span>
+            <strong id="financeWages">€0</strong>
+        </div>
 
-      <div
-        id="financeLog"
-        class="career-log">
-      </div>
+        <div class="stat">
+            <span>NET BALANCE</span>
+            <strong id="financeBalance">€0</strong>
+        </div>
 
-      <button
-        id="financeBackButton"
-        class="secondary"
-        type="button">
+    </div>
+
+    <div id="financeLog"
+         class="career-log">
+    </div>
+
+    <button id="financeBackButton"
+            class="secondary"
+            type="button">
         BACK
-      </button>
+    </button>
 
-    </section>
+</section>
 
 
-    <!-- =======================================
-         SAVE / SETTINGS
-    ======================================== -->
+<!-- ================= SETTINGS ================= -->
 
-    <section id="settingsScreen" class="screen">
+<section id="settingsScreen" class="screen">
 
-      <div class="page-header">
+    <div class="page-header">
 
         <div>
-          <span class="eyebrow">SYSTEM</span>
-          <h2>SETTINGS</h2>
+            <span class="eyebrow">
+                SYSTEM
+            </span>
+
+            <h2>
+                SETTINGS
+            </h2>
+
         </div>
 
-      </div>
+    </div>
 
-      <div class="settings-list">
+    <div class="settings-list">
 
-        <button
-          id="saveGameButton"
-          class="secondary"
-          type="button">
-          SAVE GAME
+        <button id="saveGameButton"
+                class="secondary"
+                type="button">
+            SAVE GAME
         </button>
 
-        <button
-          id="resetGameButton"
-          class="danger"
-          type="button">
-          RESET GAME
+        <button id="resetGameButton"
+                class="danger"
+                type="button">
+            RESET GAME
         </button>
 
-      </div>
+    </div>
 
-    </section>
+</section>
 
-
-  </main>
-
-
-  <!-- =========================================
-       TOAST / NOTIFICATION
-  ========================================== -->
-
-  <div
-    id="toast"
-    class="toast hidden"
-    aria-live="polite">
-  </div>
+</main>
 
 
-  <!-- =========================================
-       JAVASCRIPT
-  ========================================== -->
+<!-- ================= TOAST ================= -->
 
-  <script src="script.js?v=10"></script>
+<div id="toast"
+     class="toast hidden"
+     aria-live="polite">
+</div>
+
+
+<script src="script.js?v=20"></script>
 
 </body>
 </html>
