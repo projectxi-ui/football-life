@@ -1,2292 +1,1718 @@
-/* =========================================================
-   PROJECT XI: FOOTBALL LIFE
-   RED / BLACK / SILVER
-   CINEMATIC FOOTBALL LIFE SIMULATOR
-   ========================================================= */
-
 :root {
-    --bg: #050505;
-    --bg-2: #090909;
-    --panel: #0d0d0d;
-    --panel-2: #121212;
+    --bg:#05070a;
+    --bg2:#080c11;
+    --panel:#0d1219;
+    --panel2:#111821;
 
-    --red: #e10600;
-    --red-dark: #8f0000;
-    --red-light: #ff3028;
+    --red:#e10600;
+    --red2:#ff3028;
+    --green:#20c878;
+    --gold:#ffd166;
+    --blue:#1d7cff;
 
-    --white: #ffffff;
-    --text: #f2f2f2;
-    --silver: #bdbdbd;
-    --muted: #858585;
-    --muted-2: #555;
+    --white:#fff;
+    --text:#f3f5f7;
+    --silver:#b8c0ca;
+    --muted:#7e8996;
+    --line:#202a35;
+    --line2:#2c3744;
 
-    --line: #272727;
-    --line-light: #3a3a3a;
+    --danger:#ff4b4b;
 
-    --success: #83e69a;
-    --danger: #e10600;
-    --warning: #ffd166;
-
-    --transition: 180ms ease;
+    --transition:180ms ease;
 }
 
-
-/* =========================================================
-   RESET
-   ========================================================= */
-
 * {
-    box-sizing: border-box;
+    box-sizing:border-box;
 }
 
 html {
-    scroll-behavior: smooth;
+    scroll-behavior:smooth;
 }
 
 body {
-    margin: 0;
-    min-height: 100vh;
+    margin:0;
+    min-height:100vh;
 
     background:
         radial-gradient(
-            circle at 50% -15%,
-            rgba(225, 6, 0, 0.10),
+            circle at 50% -20%,
+            rgba(29,124,255,.13),
             transparent 32%
+        ),
+        radial-gradient(
+            circle at 90% 30%,
+            rgba(225,6,0,.08),
+            transparent 25%
         ),
         linear-gradient(
             180deg,
-            #090909 0%,
-            #050505 55%,
-            #030303 100%
+            #080c11,
+            #05070a
         );
 
-    color: var(--text);
+    color:var(--text);
 
     font-family:
         Inter,
-        ui-sans-serif,
         system-ui,
         -apple-system,
         BlinkMacSystemFont,
         "Segoe UI",
         sans-serif;
 
-    -webkit-font-smoothing: antialiased;
+    -webkit-font-smoothing:antialiased;
 }
 
 button,
 input,
-select,
-textarea {
-    font: inherit;
+select {
+    font:inherit;
 }
 
 button {
-    cursor: pointer;
+    cursor:pointer;
 }
 
 button:disabled {
-    cursor: not-allowed;
-    opacity: .4;
+    opacity:.35;
+    cursor:not-allowed;
 }
 
 
-/* =========================================================
-   SCROLLBAR
-   ========================================================= */
+/* SCROLLBAR */
 
 ::-webkit-scrollbar {
-    width: 7px;
+    width:7px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #050505;
+    background:#05070a;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #292929;
+    background:#293441;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--red);
+    background:var(--blue);
 }
 
 
-/* =========================================================
-   SCREEN SYSTEM
-   THIS FIXES EVERY SCREEN SHOWING AT ONCE
-   ========================================================= */
+/* SCREEN SYSTEM */
 
 .screen {
-    display: none !important;
+    display:none !important;
 
-    width: min(1400px, calc(100% - 48px));
-    margin: 0 auto;
+    width:min(1400px,calc(100% - 48px));
 
-    padding: 48px 0 90px;
+    margin:auto;
+
+    padding:48px 0 90px;
 }
 
 .screen.active {
-    display: block !important;
+    display:block !important;
 
-    animation: screenEnter .28s ease;
+    animation:screenEnter .3s ease;
 }
 
 .hidden {
-    display: none !important;
+    display:none !important;
 }
 
 @keyframes screenEnter {
     from {
-        opacity: 0;
-        transform: translateY(10px);
+        opacity:0;
+        transform:translateY(12px);
     }
 
     to {
-        opacity: 1;
-        transform: translateY(0);
+        opacity:1;
+        transform:translateY(0);
     }
 }
 
 
-/* =========================================================
-   TOP BAR
-   ========================================================= */
+/* TOP BAR */
 
 .topbar {
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    position:sticky;
+    top:0;
+    z-index:1000;
 
-    height: 68px;
+    height:70px;
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 
-    padding: 0 30px;
+    padding:0 30px;
 
-    background: rgba(5, 5, 5, .92);
+    background:rgba(5,8,12,.92);
 
-    border-bottom: 1px solid #202020;
+    border-bottom:1px solid var(--line);
 
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter:blur(18px);
 }
 
 .logo-button {
-    padding: 0;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
 
-    display: flex;
-    align-items: center;
-    gap: 11px;
+    border:0;
+    background:none;
 
-    border: 0;
-    background: transparent;
+    padding:0;
 
-    color: white;
-
-    min-height: auto;
-}
-
-.logo-button:hover {
-    transform: none;
-    background: transparent;
-    box-shadow: none;
-}
-
-.logo-mark {
-    width: 32px;
-    height: 32px;
-
-    display: grid;
-    place-items: center;
-
-    border: 1px solid #444;
-
-    color: white;
-
-    font-size: 12px;
-    font-weight: 950;
+    color:white;
 }
 
 .logo-main {
-    font-size: 17px;
-    font-weight: 950;
-    letter-spacing: .14em;
+    font-size:17px;
+    font-weight:950;
+    letter-spacing:.15em;
 }
 
 .logo-sub {
-    margin-top: 2px;
+    margin-top:3px;
 
-    color: var(--red);
+    color:var(--red);
 
-    font-size: 8px;
-    font-weight: 900;
-    letter-spacing: .22em;
+    font-size:8px;
+    font-weight:900;
+
+    letter-spacing:.25em;
 }
 
-.topbar-right,
-.top-stats {
-    display: flex;
-    align-items: center;
-    gap: 28px;
+.topbar-right {
+    display:flex;
+    gap:30px;
 }
 
 .top-stat {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+
+    color:var(--muted);
+
+    font-size:8px;
+    font-weight:900;
+
+    letter-spacing:.14em;
 }
 
-.top-stat-label {
-    color: var(--muted-2);
+.top-stat strong {
+    margin-top:3px;
 
-    font-size: 8px;
-    font-weight: 900;
+    color:white;
 
-    letter-spacing: .14em;
-    text-transform: uppercase;
-}
-
-.top-stat-value {
-    color: white;
-
-    font-size: 14px;
-    font-weight: 900;
-}
-
-#topAge,
-#topRating,
-#topMoney {
-    color: white;
+    font-size:14px;
 }
 
 
-/* =========================================================
-   GENERAL TYPOGRAPHY
-   ========================================================= */
+/* TYPOGRAPHY */
 
 h1,
 h2,
 h3,
 p {
-    margin-top: 0;
+    margin-top:0;
 }
 
 h1,
 h2,
 h3 {
-    color: white;
+    color:white;
 }
 
 .eyebrow,
 .hero-eyebrow,
 .section-label {
-    color: var(--red);
+    color:var(--blue);
 
-    font-size: 10px;
-    font-weight: 950;
+    font-size:9px;
+    font-weight:950;
 
-    letter-spacing: .25em;
-    text-transform: uppercase;
+    letter-spacing:.25em;
+
+    text-transform:uppercase;
 }
 
 
-/* =========================================================
-   MENU / HOME
-   ========================================================= */
+/* BUTTONS */
 
-#menuScreen {
-    width: 100%;
-    max-width: none;
+button {
+    min-height:46px;
 
-    min-height: calc(100vh - 68px);
+    padding:0 19px;
 
-    padding:
-        0
-        clamp(24px, 7vw, 110px)
-        70px;
-}
+    border:1px solid var(--line2);
 
-.hero {
-    min-height: calc(100vh - 140px);
+    background:#10161e;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    color:white;
 
-    position: relative;
+    border-radius:3px;
 
-    overflow: hidden;
-
-    border-bottom: 1px solid #242424;
-
-    background:
-        radial-gradient(
-            circle at 85% 45%,
-            rgba(225, 6, 0, .13),
-            transparent 28%
-        );
-}
-
-.hero::before {
-    content: "";
-
-    position: absolute;
-
-    left: 0;
-    top: 0;
-
-    width: 1px;
-    height: 100%;
-
-    background:
-        linear-gradient(
-            180deg,
-            var(--red),
-            transparent 80%
-        );
-}
-
-.hero::after {
-    content: "XI";
-
-    position: absolute;
-
-    right: -20px;
-    bottom: -90px;
-
-    color: rgba(255,255,255,.025);
-
-    font-size: clamp(200px, 32vw, 500px);
-    font-weight: 950;
-    line-height: .7;
-
-    pointer-events: none;
-}
-
-.hero-eyebrow {
-    position: relative;
-    z-index: 2;
-
-    margin-bottom: 22px;
-}
-
-.hero h1 {
-    position: relative;
-    z-index: 2;
-
-    max-width: 1000px;
-
-    margin: 0;
-
-    font-size: clamp(58px, 10vw, 150px);
-    line-height: .82;
-
-    font-weight: 950;
-    letter-spacing: -.075em;
-
-    text-transform: uppercase;
-}
-
-.hero h1 span,
-.hero .accent {
-    color: var(--red);
-}
-
-.hero p {
-    position: relative;
-    z-index: 2;
-
-    max-width: 620px;
-
-    margin: 30px 0 40px;
-
-    color: var(--silver);
-
-    font-size: 16px;
-    line-height: 1.7;
-}
-
-.hero-actions,
-.menu-actions {
-    position: relative;
-    z-index: 2;
-
-    display: flex;
-    flex-wrap: wrap;
-
-    gap: 10px;
-}
-
-
-/* =========================================================
-   BUTTONS
-   ========================================================= */
-
-button,
-.action-button {
-    min-height: 46px;
-
-    padding: 0 19px;
-
-    border: 1px solid #383838;
-
-    border-radius: 0;
-
-    background: #101010;
-
-    color: white;
-
-    font-weight: 800;
-
-    letter-spacing: .03em;
+    font-weight:850;
 
     transition:
-        transform var(--transition),
-        border-color var(--transition),
-        background var(--transition),
-        color var(--transition);
+        transform .18s ease,
+        border-color .18s ease,
+        background .18s ease,
+        box-shadow .18s ease;
 }
 
-button:hover,
-.action-button:hover {
-    transform: translateY(-2px);
+button:hover {
+    transform:translateY(-2px);
 
-    border-color: var(--red);
+    border-color:var(--blue);
 
-    background: #151515;
+    background:#151e29;
 
     box-shadow:
-        0 8px 30px rgba(0,0,0,.3);
-}
-
-button:active {
-    transform: translateY(0);
+        0 10px 30px rgba(0,0,0,.35);
 }
 
 .primary {
-    background: var(--red);
-
-    border-color: var(--red);
-
-    color: white;
+    background:var(--red);
+    border-color:var(--red);
 }
 
 .primary:hover {
-    background: var(--red-light);
-
-    border-color: var(--red-light);
+    background:var(--red2);
+    border-color:var(--red2);
 
     box-shadow:
         0 10px 35px rgba(225,6,0,.25);
 }
 
-.danger,
-#resetGameButton {
-    border-color: #641010;
-    color: #ff6d6d;
+.danger {
+    border-color:#681515;
+    color:#ff7373;
 }
 
-.danger:hover,
-#resetGameButton:hover {
-    border-color: var(--red);
-    color: white;
-    background: var(--red-dark);
+.danger:hover {
+    background:#7e1515;
+    border-color:var(--red);
+    color:white;
 }
 
-
-/* =========================================================
-   WORLD FOOTBALL
-   ========================================================= */
-
-.world-section {
-    margin-top: 70px;
-
-    border-top: 1px solid var(--line);
-}
-
-.world-section h2 {
-    margin: 18px 0;
-
-    font-size: 28px;
-    letter-spacing: -.04em;
-}
-
-.world-feed {
-    border-top: 1px solid var(--line);
-}
-
-.world-feed > * {
-    padding: 16px 0;
-
-    border-bottom: 1px solid #202020;
+.wide {
+    width:100%;
 }
 
 
-/* =========================================================
-   CREATION
-   ========================================================= */
+/* HERO */
 
-#heroCreate,
-#creationScreen {
-    max-width: 1100px;
+#menuScreen {
+    width:100%;
+    max-width:none;
+
+    min-height:calc(100vh - 70px);
+
+    padding:
+        0
+        clamp(25px,7vw,110px)
+        70px;
 }
 
-.creation-layout {
-    display: grid;
+.hero {
+    min-height:calc(100vh - 145px);
 
-    grid-template-columns:
-        minmax(0, 1fr)
-        minmax(280px, .65fr);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
 
-    gap: 70px;
+    position:relative;
 
-    align-items: center;
+    overflow:hidden;
+
+    border-bottom:1px solid var(--line);
 }
+
+.hero::before {
+    content:"";
+
+    position:absolute;
+    left:0;
+    top:0;
+
+    width:2px;
+    height:100%;
+
+    background:
+        linear-gradient(
+            180deg,
+            var(--red),
+            var(--blue),
+            transparent
+        );
+}
+
+.hero::after {
+    content:"XI";
+
+    position:absolute;
+
+    right:-40px;
+    bottom:-100px;
+
+    color:rgba(255,255,255,.025);
+
+    font-size:clamp(200px,35vw,520px);
+
+    font-weight:950;
+
+    pointer-events:none;
+}
+
+.hero h1 {
+    position:relative;
+    z-index:2;
+
+    margin:0;
+
+    font-size:clamp(65px,11vw,155px);
+
+    line-height:.8;
+
+    font-weight:950;
+
+    letter-spacing:-.08em;
+}
+
+.hero p {
+    position:relative;
+    z-index:2;
+
+    max-width:650px;
+
+    margin:30px 0 40px;
+
+    color:var(--silver);
+
+    line-height:1.7;
+}
+
+.menu-actions {
+    position:relative;
+    z-index:2;
+
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+
+/* PAGE HEADER */
+
+.page-header {
+    display:flex;
+
+    justify-content:space-between;
+    align-items:flex-end;
+
+    gap:30px;
+
+    padding-bottom:25px;
+
+    border-bottom:1px solid var(--line);
+}
+
+.page-header h2 {
+    margin:8px 0 0;
+
+    font-size:clamp(40px,6vw,78px);
+
+    font-weight:950;
+
+    letter-spacing:-.065em;
+}
+
+
+/* INPUTS */
 
 .creation-panel {
-    border-top: 1px solid var(--red);
+    border-top:2px solid var(--red);
 
-    padding-top: 28px;
+    padding-top:28px;
 }
 
-.creation-panel h1,
-.creation-panel h2 {
-    margin-bottom: 35px;
+.creation-panel label,
+label {
+    display:block;
 
-    font-size: clamp(40px, 6vw, 72px);
+    margin:18px 0 8px;
 
-    font-weight: 950;
-    letter-spacing: -.065em;
-}
+    color:var(--muted);
 
-.form-group {
-    margin-bottom: 22px;
-}
+    font-size:9px;
+    font-weight:950;
 
-.form-group label {
-    display: block;
-
-    margin-bottom: 9px;
-
-    color: var(--muted);
-
-    font-size: 9px;
-    font-weight: 950;
-
-    letter-spacing: .18em;
-    text-transform: uppercase;
+    letter-spacing:.15em;
 }
 
 input,
-select,
-textarea {
-    width: 100%;
+select {
+    width:100%;
 
-    min-height: 48px;
+    min-height:48px;
 
-    padding: 12px 14px;
+    padding:12px 14px;
 
-    border: 1px solid #303030;
+    border:1px solid var(--line2);
 
-    border-radius: 0;
+    outline:none;
 
-    outline: none;
+    background:#080c11;
 
-    background: #090909;
+    color:white;
 
-    color: white;
-
-    transition:
-        border-color var(--transition),
-        background var(--transition);
+    border-radius:2px;
 }
 
 input:focus,
-select:focus,
-textarea:focus {
-    border-color: var(--red);
-
-    background: #0d0d0d;
+select:focus {
+    border-color:var(--blue);
 
     box-shadow:
-        inset 3px 0 0 var(--red);
+        inset 3px 0 0 var(--blue);
 }
 
-::placeholder {
-    color: #505050;
+
+/* CREATION */
+
+.creation-layout {
+    display:grid;
+
+    grid-template-columns:1fr .7fr;
+
+    gap:70px;
+
+    align-items:center;
+
+    margin-top:40px;
 }
 
 .creation-preview {
-    min-height: 400px;
+    min-height:400px;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
 
-    border-left: 1px solid #292929;
-
-    text-align: center;
+    border-left:1px solid var(--line);
 }
 
 .player-silhouette {
-    width: 180px;
-    height: 260px;
+    width:180px;
+    height:260px;
 
-    margin-bottom: 25px;
+    display:grid;
+    place-items:center;
 
-    border-bottom: 2px solid var(--red);
+    border-bottom:2px solid var(--red);
 
-    opacity: .35;
+    opacity:.35;
 }
 
-#previewName {
-    color: white;
-
-    font-size: 25px;
-    font-weight: 950;
-
-    text-transform: uppercase;
+.silhouette-number {
+    font-size:70px;
+    font-weight:950;
 }
 
-#previewPosition {
-    margin-top: 6px;
+.preview-name {
+    margin-top:20px;
 
-    color: var(--red);
+    font-size:25px;
+    font-weight:950;
+}
 
-    font-size: 10px;
-    font-weight: 900;
+.preview-position {
+    margin-top:5px;
 
-    letter-spacing: .18em;
+    color:var(--red);
+
+    font-size:10px;
+    font-weight:900;
+
+    letter-spacing:.2em;
 }
 
 
-/* =========================================================
-   ACADEMY
-   ========================================================= */
+/* CLUBS */
 
 .club-list {
-    margin-top: 30px;
+    margin-top:30px;
 
-    border-top: 1px solid var(--line);
+    border-top:1px solid var(--line);
 }
 
 .club-list > * {
-    padding: 24px 5px;
+    padding:25px 5px;
 
-    border-bottom: 1px solid #242424;
+    border-bottom:1px solid var(--line);
 
-    transition:
-        padding-left var(--transition),
-        border-color var(--transition);
+    transition:.18s ease;
 }
 
 .club-list > *:hover {
-    padding-left: 15px;
+    padding-left:20px;
 
-    border-color: var(--red);
+    border-color:var(--blue);
+
+    background:rgba(29,124,255,.025);
 }
 
 
-/* =========================================================
-   CAREER
-   ========================================================= */
+/* CAREER */
 
 #careerScreen {
-    width: min(1500px, calc(100% - 48px));
+    width:min(1500px,calc(100% - 48px));
 }
 
 .career-header {
-    display: flex;
+    display:flex;
 
-    justify-content: space-between;
-    align-items: flex-end;
+    justify-content:space-between;
+    align-items:flex-end;
 
-    gap: 30px;
+    gap:30px;
 
-    padding-bottom: 28px;
+    padding-bottom:28px;
 
-    border-bottom: 1px solid var(--line);
+    border-bottom:1px solid var(--line);
 }
 
-.career-header h1 {
-    margin: 0;
+#careerPlayerName {
+    margin:5px 0;
 
-    font-size: clamp(45px, 7vw, 90px);
+    font-size:clamp(45px,7vw,90px);
 
-    font-weight: 950;
+    line-height:.8;
 
-    letter-spacing: -.07em;
+    font-weight:950;
+
+    letter-spacing:-.07em;
 }
 
-#careerChapter {
-    color: var(--red);
+#careerClub {
+    color:var(--muted);
 
-    font-size: 10px;
-    font-weight: 950;
-
-    letter-spacing: .22em;
-    text-transform: uppercase;
+    font-size:12px;
 }
 
-#careerClub,
-#displayDetails {
-    margin-top: 9px;
-
-    color: var(--muted);
-
-    font-size: 12px;
+.career-rating {
+    text-align:right;
 }
 
-.season-box {
-    padding: 12px 15px;
+.career-rating span {
+    color:var(--muted);
 
-    border-left: 2px solid var(--red);
+    font-size:9px;
+    font-weight:900;
+}
 
-    color: var(--silver);
+#careerRating {
+    display:block;
 
-    font-size: 10px;
-    font-weight: 900;
+    color:var(--red);
 
-    letter-spacing: .12em;
-    text-transform: uppercase;
+    font-size:80px;
+
+    font-weight:950;
+
+    line-height:.8;
 }
 
 
-/* =========================================================
-   CAREER STATS
-   ========================================================= */
+/* STATS */
 
-.career-stats,
-.stats-grid {
-    display: grid;
+.career-stats {
+    display:grid;
 
-    grid-template-columns:
-        repeat(7, minmax(0, 1fr));
+    grid-template-columns:repeat(6,1fr);
 
-    margin: 28px 0;
+    margin:28px 0;
 
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
 }
 
 .stat {
-    min-height: 105px;
+    min-height:100px;
 
-    padding: 18px 14px;
+    padding:18px;
 
-    border-right: 1px solid #222;
+    border-right:1px solid var(--line);
 }
 
 .stat:last-child {
-    border-right: 0;
+    border-right:0;
 }
 
-.stat-label {
-    color: var(--muted-2);
+.stat span {
+    color:var(--muted);
 
-    font-size: 8px;
-    font-weight: 950;
+    font-size:8px;
+    font-weight:950;
 
-    letter-spacing: .14em;
-    text-transform: uppercase;
+    letter-spacing:.14em;
 }
 
-.stat-value {
-    margin-top: 12px;
+.stat strong {
+    display:block;
 
-    color: white;
+    margin-top:12px;
 
-    font-size: 30px;
-    font-weight: 950;
+    color:white;
 
-    letter-spacing: -.05em;
-}
+    font-size:29px;
 
-.career-rating,
-#careerRating {
-    color: var(--red);
+    font-weight:950;
 }
 
 
-/* =========================================================
-   CAREER GRID
-   ========================================================= */
+/* GRID */
 
-.career-grid,
-.career-layout {
-    display: grid;
+.career-grid {
+    display:grid;
 
     grid-template-columns:
-        minmax(0, 1.4fr)
-        minmax(300px, .6fr);
+        minmax(0,1.4fr)
+        minmax(300px,.6fr);
 
-    gap: 50px;
+    gap:45px;
 }
 
-
-/* =========================================================
-   PANELS
-   NO CARD STYLE
-   ========================================================= */
-
 .panel {
-    border: 0;
+    border-top:1px solid var(--line);
+}
 
-    border-top: 1px solid var(--line);
-
-    border-radius: 0;
-
-    background: transparent;
-
-    box-shadow: none;
+.profile-panel {
+    border-top-color:var(--red);
 }
 
 .panel-header {
-    padding: 15px 0;
+    display:flex;
 
-    border-bottom: 1px solid var(--line);
+    justify-content:space-between;
 
-    color: var(--silver);
+    align-items:center;
 
-    font-size: 9px;
-    font-weight: 950;
+    padding:15px 0;
 
-    letter-spacing: .18em;
-    text-transform: uppercase;
+    border-bottom:1px solid var(--line);
 }
 
+.panel-header h3 {
+    margin:4px 0 0;
 
-/* =========================================================
-   PROFILE
-   ========================================================= */
+    font-size:17px;
 
-.profile-panel {
-    border-top: 1px solid var(--red);
+    letter-spacing:-.02em;
 }
 
-.profile-rating,
-#profileRating {
-    margin: 15px 0;
+.profile-number {
+    margin-top:25px;
 
-    color: var(--red);
+    color:var(--red);
 
-    font-size: clamp(70px, 9vw, 120px);
-    font-weight: 950;
+    font-size:100px;
 
-    letter-spacing: -.08em;
-    line-height: .8;
+    font-weight:950;
+
+    line-height:.8;
 }
 
 #profileName {
-    font-size: 24px;
-    font-weight: 950;
+    margin-top:25px;
+
+    font-size:25px;
+
+    font-weight:950;
 }
 
 #profilePosition,
 #profileClub {
-    margin-top: 5px;
+    color:var(--muted);
 
-    color: var(--muted);
-
-    font-size: 11px;
+    font-size:11px;
 }
 
-#potentialValue {
-    margin-top: 30px;
-
-    color: var(--silver);
-
-    font-size: 11px;
+.potential-bar {
+    margin-top:35px;
 }
 
-#potentialFill {
-    height: 3px;
+.bar-label {
+    display:flex;
 
-    margin-top: 8px;
+    justify-content:space-between;
 
-    background: var(--red);
+    color:var(--muted);
+
+    font-size:9px;
+    font-weight:900;
 }
 
+.bar {
+    height:4px;
 
-/* =========================================================
-   PLAYER
-   ========================================================= */
+    margin-top:8px;
 
-.player-panel {
-    border-top: 1px solid var(--line);
+    background:#1b222b;
 }
 
-#playerAvatar {
-    width: 75px;
-    height: 75px;
+.bar-fill {
+    height:100%;
 
-    display: grid;
-    place-items: center;
-
-    margin: 20px 0;
-
-    border: 1px solid #3a3a3a;
-
-    border-radius: 50%;
-
-    background: #111;
-
-    color: white;
-
-    font-size: 22px;
-    font-weight: 950;
-}
-
-#clubName {
-    margin: 0;
-
-    color: white;
-
-    font-size: 25px;
-    font-weight: 950;
-
-    letter-spacing: -.04em;
-}
-
-#clubStatus {
-    color: var(--red);
-
-    font-size: 9px;
-    font-weight: 900;
-
-    letter-spacing: .15em;
-    text-transform: uppercase;
+    background:linear-gradient(
+        90deg,
+        var(--red),
+        var(--blue)
+    );
 }
 
 
-/* =========================================================
-   CALENDAR
-   ========================================================= */
+/* CALENDAR */
 
-.calendar-section {
-    margin-top: 40px;
+.calendar-panel {
+    grid-row:span 2;
 }
 
 #calendarDate {
-    color: white;
+    color:white;
 
-    font-size: 30px;
-    font-weight: 950;
+    font-size:20px;
+
+    font-weight:950;
 }
 
-.calendar-list,
-.calendar {
-    display: flex;
-    flex-direction: column;
+.calendar-list {
+    margin-top:15px;
 
-    margin-top: 15px;
-
-    border-top: 1px solid var(--line);
+    border-top:1px solid var(--line);
 }
 
-.calendar-list > *,
 .calendar-day {
-    min-height: 65px;
+    min-height:75px;
 
-    display: grid;
+    display:grid;
 
-    grid-template-columns: 130px 1fr;
+    grid-template-columns:110px 1fr auto;
 
-    align-items: center;
+    align-items:center;
 
-    padding: 12px 8px;
+    gap:15px;
 
-    border-bottom: 1px solid #202020;
+    padding:12px 10px;
 
-    background: transparent;
+    border-bottom:1px solid var(--line);
+
+    transition:.18s ease;
 }
 
-.calendar-list > *:hover,
-.calendar-day.current {
-    border-left: 2px solid var(--red);
+.calendar-day:hover {
+    background:rgba(255,255,255,.025);
+}
 
-    background: rgba(225,6,0,.035);
+.calendar-day.current {
+    border-left:3px solid var(--blue);
+
+    background:rgba(29,124,255,.08);
+}
+
+.calendar-day.matchday {
+    border-right:3px solid var(--red);
+
+    background:rgba(225,6,0,.045);
+}
+
+.calendar-day.current.matchday {
+    border-left-color:var(--green);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(32,200,120,.10),
+            rgba(225,6,0,.05)
+        );
 }
 
 .calendar-day-name {
-    color: var(--muted);
+    color:var(--muted);
 
-    font-size: 9px;
-    font-weight: 900;
+    font-size:9px;
+    font-weight:950;
 
-    letter-spacing: .12em;
-    text-transform: uppercase;
+    letter-spacing:.12em;
 }
 
 .calendar-day-event {
-    color: white;
+    color:white;
 
-    font-size: 12px;
+    font-size:13px;
+
+    font-weight:700;
+}
+
+.calendar-day-badge {
+    padding:5px 8px;
+
+    border:1px solid var(--line2);
+
+    color:var(--muted);
+
+    font-size:8px;
+
+    font-weight:900;
+
+    letter-spacing:.1em;
+}
+
+.calendar-day.matchday .calendar-day-badge {
+    border-color:var(--red);
+
+    color:#ff7777;
+}
+
+.calendar-status {
+    margin-top:15px;
+
+    padding:15px;
+
+    border-left:3px solid var(--blue);
+
+    background:#0a1017;
+
+    color:var(--silver);
+
+    font-size:11px;
 }
 
 
-/* =========================================================
-   CAREER LOG
-   ========================================================= */
+/* LOG */
 
 #careerLog {
-    max-height: 580px;
+    max-height:550px;
 
-    overflow-y: auto;
+    overflow-y:auto;
 
-    border-top: 1px solid var(--line);
+    border-top:1px solid var(--line);
 }
 
 .log-entry {
-    position: relative;
+    position:relative;
 
-    padding: 20px 10px 20px 25px;
+    padding:18px 10px 18px 25px;
 
-    border-bottom: 1px solid #202020;
+    border-bottom:1px solid var(--line);
 
-    color: #aaa;
+    color:var(--silver);
 
-    font-size: 13px;
+    font-size:12px;
 
-    line-height: 1.65;
+    line-height:1.6;
 }
 
 .log-entry::before {
-    content: "";
+    content:"";
 
-    position: absolute;
+    position:absolute;
 
-    left: 4px;
-    top: 26px;
+    left:5px;
+    top:25px;
 
-    width: 6px;
-    height: 6px;
+    width:6px;
+    height:6px;
 
-    border-radius: 50%;
+    border-radius:50%;
 
-    background: var(--red);
-}
-
-.log-entry strong {
-    color: white;
+    background:var(--blue);
 }
 
 .log-heading {
-    margin-bottom: 4px;
+    margin-bottom:4px;
 
-    color: var(--red);
+    color:var(--blue);
 
-    font-size: 9px;
-    font-weight: 950;
+    font-size:8px;
+    font-weight:950;
 
-    letter-spacing: .16em;
-    text-transform: uppercase;
+    letter-spacing:.16em;
 }
 
 
-/* =========================================================
-   EVENT
-   ========================================================= */
+/* WORLD */
 
-.event-panel {
-    margin-top: 30px;
-
-    padding: 22px 0;
-
-    border-top: 1px solid var(--red);
-    border-bottom: 1px solid var(--line);
+.world-feed {
+    border-top:1px solid var(--line);
 }
 
-#eventText {
-    margin: 0;
+.world-feed > * {
+    padding:15px 0;
 
-    color: var(--silver);
+    border-bottom:1px solid var(--line);
 
-    line-height: 1.7;
+    color:var(--silver);
+
+    font-size:12px;
 }
 
-
-/* =========================================================
-   ACTIONS
-   ========================================================= */
-
-.actions {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-    gap: 8px;
-
-    margin-top: 20px;
+.world-feed strong {
+    color:white;
 }
 
-.actions button {
-    width: 100%;
+.live-dot {
+    color:var(--green);
+
+    font-size:8px;
+    font-weight:950;
+
+    letter-spacing:.15em;
 }
 
 
-/* =========================================================
-   WORLD FEED
-   ========================================================= */
+/* ACTIONS */
 
-#worldFeed,
-#ownerWorldFeed {
-    border-top: 1px solid var(--line);
-}
+.action-strip {
+    display:flex;
 
-#worldFeed > *,
-#ownerWorldFeed > * {
-    padding: 15px 0;
+    flex-wrap:wrap;
 
-    border-bottom: 1px solid #202020;
+    gap:8px;
 
-    color: var(--silver);
-
-    font-size: 12px;
-}
-
-#worldFeed strong,
-#ownerWorldFeed strong {
-    color: white;
+    margin-top:25px;
 }
 
 
-/* =========================================================
-   MATCHDAY
-   ========================================================= */
+/* MATCH */
 
 #matchScreen {
-    width: 100%;
-    max-width: none;
+    width:100%;
+    max-width:none;
 
-    min-height: calc(100vh - 68px);
+    min-height:calc(100vh - 70px);
 
     padding:
         60px
-        clamp(24px, 7vw, 120px)
+        clamp(25px,8vw,130px)
         100px;
 
     background:
         radial-gradient(
             circle at 50% 35%,
-            rgba(225,6,0,.12),
-            transparent 32%
+            rgba(29,124,255,.12),
+            transparent 30%
         );
 }
 
 .match-header {
-    text-align: center;
+    text-align:center;
 
-    border-bottom: 1px solid var(--line);
+    padding-bottom:30px;
 
-    padding-bottom: 30px;
+    border-bottom:1px solid var(--line);
 }
 
 #matchCompetition {
-    color: var(--red);
+    color:var(--red);
 
-    font-size: 10px;
-    font-weight: 950;
+    font-size:11px;
 
-    letter-spacing: .25em;
-    text-transform: uppercase;
+    font-weight:950;
+
+    letter-spacing:.25em;
 }
 
-.match-scoreboard {
-    max-width: 1100px;
+.match-stadium {
+    max-width:1100px;
 
-    margin: 70px auto;
+    margin:80px auto;
 
-    display: grid;
+    display:grid;
 
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns:1fr auto 1fr;
 
-    align-items: center;
+    align-items:center;
 
-    gap: 30px;
+    gap:40px;
 
-    text-align: center;
+    text-align:center;
+}
+
+.match-team {
+    display:flex;
+
+    flex-direction:column;
+
+    gap:25px;
 }
 
 #homeTeam,
 #awayTeam {
-    color: var(--silver);
+    color:var(--silver);
 
-    font-size: clamp(18px, 3vw, 28px);
-    font-weight: 900;
+    font-size:clamp(18px,3vw,30px);
+
+    font-weight:950;
 }
 
 #homeScore,
 #awayScore {
-    color: white;
+    color:white;
 
-    font-size: clamp(80px, 13vw, 170px);
+    font-size:clamp(80px,12vw,170px);
 
-    font-weight: 950;
+    font-weight:950;
 
-    letter-spacing: -.08em;
+    line-height:.7;
+}
 
-    line-height: .75;
+.match-time {
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:10px;
 }
 
 #matchMinute {
-    color: var(--red);
+    color:var(--red);
 
-    font-size: 11px;
-    font-weight: 950;
-
-    letter-spacing: .15em;
+    font-weight:950;
 }
 
-.match-actions {
-    max-width: 800px;
+.match-status {
+    padding:5px 10px;
 
-    margin: auto;
+    border:1px solid var(--green);
 
-    display: grid;
+    color:var(--green);
 
-    grid-template-columns: repeat(3, 1fr);
+    font-size:8px;
 
-    gap: 10px;
+    font-weight:900;
+
+    letter-spacing:.15em;
+}
+
+.match-controls {
+    max-width:850px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:10px;
 }
 
 #matchCommentary {
-    max-width: 900px;
+    max-width:900px;
 
-    margin: 45px auto 0;
+    margin:45px auto 0;
 
-    padding: 20px 0;
+    padding:25px;
 
-    border-top: 1px solid var(--line);
+    border-top:1px solid var(--line);
 
-    color: var(--silver);
+    text-align:center;
 
-    text-align: center;
+    color:var(--silver);
 
-    line-height: 1.7;
+    line-height:1.7;
 }
 
 
-/* =========================================================
-   CONTRACT
-   ========================================================= */
+/* CONTRACT / NEGOTIATION */
 
-#contractScreen {
-    max-width: 900px;
+.big-moment {
+    max-width:1000px;
 
-    min-height: 70vh;
+    margin:auto;
 
-    display: none;
+    padding-top:40px;
+
+    border-top:2px solid var(--red);
 }
 
-#contractScreen.active {
-    display: flex !important;
+#contractClubName,
+#negotiationClub {
+    font-size:clamp(45px,7vw,90px);
 
-    flex-direction: column;
+    font-weight:950;
 
-    justify-content: center;
+    letter-spacing:-.07em;
 }
 
-.contract-panel {
-    border-top: 2px solid var(--red);
+.contract-details,
+.negotiation-box {
+    display:grid;
 
-    padding-top: 30px;
+    grid-template-columns:repeat(3,1fr);
+
+    margin:35px 0;
+
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
 }
 
-#contractClubName {
-    font-size: clamp(45px, 7vw, 90px);
+.contract-details > div,
+.negotiation-box > div {
+    padding:25px;
 
-    font-weight: 950;
-
-    letter-spacing: -.07em;
+    border-right:1px solid var(--line);
 }
 
-#contractSalary,
-#contractValue {
-    color: var(--red);
+.contract-details > div:last-child,
+.negotiation-box > div:last-child {
+    border-right:0;
+}
 
-    font-size: 35px;
-    font-weight: 950;
+.contract-details span,
+.negotiation-box span {
+    color:var(--muted);
+
+    font-size:8px;
+
+    font-weight:950;
+}
+
+.contract-details strong,
+.negotiation-box strong {
+    display:block;
+
+    margin-top:8px;
+
+    color:var(--red);
+
+    font-size:30px;
+
+    font-weight:950;
 }
 
 
-/* =========================================================
-   TRANSFERS
-   ========================================================= */
+/* TRANSFERS */
 
 .transfer-layout {
-    display: grid;
+    display:grid;
 
-    grid-template-columns:
-        minmax(0, 1fr)
-        minmax(0, .7fr);
+    grid-template-columns:1fr .7fr;
 
-    gap: 60px;
+    gap:55px;
+
+    margin-top:35px;
 }
 
 #transferOffers {
-    border-top: 1px solid var(--line);
-}
-
-#transferOffers > * {
-    padding: 25px 5px;
-
-    border-bottom: 1px solid #242424;
-
-    transition:
-        padding-left var(--transition),
-        border-color var(--transition);
-}
-
-#transferOffers > *:hover {
-    padding-left: 18px;
-
-    border-color: var(--red);
-}
-
-#transferNegotiation {
-    border-top: 1px solid var(--red);
-
-    padding-top: 25px;
-}
-
-.transfer-offers {
-    border-top: 1px solid var(--line);
+    border-top:1px solid var(--line);
 }
 
 .transfer-card {
-    padding: 20px 0;
+    padding:22px 5px;
 
-    border-bottom: 1px solid #222;
+    border-bottom:1px solid var(--line);
+}
 
-    border-radius: 0;
-
-    background: transparent;
+.transfer-card:hover {
+    border-color:var(--blue);
 }
 
 .transfer-card h3 {
-    margin: 0;
+    margin:0;
 
-    font-size: 20px;
+    font-size:20px;
 }
 
 .transfer-value {
-    margin: 12px 0;
+    margin:10px 0;
 
-    color: var(--red);
+    color:var(--red);
 
-    font-size: 28px;
-    font-weight: 950;
+    font-size:27px;
+
+    font-weight:950;
 }
 
 
-/* =========================================================
-   NEGOTIATION
-   ========================================================= */
+/* AWARDS */
 
-#negotiationScreen {
-    max-width: 1000px;
+.awards-grid {
+    display:grid;
 
-    min-height: 70vh;
+    grid-template-columns:repeat(4,1fr);
 
-    display: none;
+    margin-top:35px;
+
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
 }
 
-#negotiationScreen.active {
-    display: flex !important;
+.award {
+    min-height:200px;
 
-    flex-direction: column;
+    padding:25px;
 
-    justify-content: center;
+    border-right:1px solid var(--line);
 }
 
-#negotiationClub {
-    font-size: clamp(45px, 7vw, 90px);
-
-    font-weight: 950;
-
-    letter-spacing: -.07em;
+.award:last-child {
+    border-right:0;
 }
 
-#negotiationOffer,
-#negotiationCurrentValue {
-    color: var(--red);
-
-    font-size: 30px;
-    font-weight: 950;
+.award-icon {
+    font-size:30px;
 }
 
-#negotiationMessage {
-    margin: 25px 0;
+.award h3 {
+    margin-top:20px;
 
-    color: var(--silver);
+    font-size:13px;
+}
 
-    line-height: 1.7;
+.award p {
+    color:var(--silver);
 }
 
 
-/* =========================================================
-   AWARDS
-   ========================================================= */
-
-#awardsScreen {
-    max-width: 1100px;
-}
-
-.awards-list {
-    border-top: 1px solid var(--line);
-}
-
-.award-item,
-#playerOfYearStatus,
-#goldenBootStatus,
-#ballonDorStatus,
-#teamTrophiesStatus {
-    padding: 25px 5px;
-
-    border-bottom: 1px solid #222;
-
-    color: var(--silver);
-
-    font-size: 14px;
-}
-
-#ballonDorStatus {
-    border-left: 3px solid var(--red);
-}
-
-
-/* =========================================================
-   RETIREMENT
-   ========================================================= */
+/* RETIREMENT */
 
 #retirementScreen {
-    width: 100%;
-    max-width: none;
+    width:100%;
+    max-width:none;
 
-    min-height: calc(100vh - 68px);
+    min-height:calc(100vh - 70px);
 
-    display: none;
+    padding-left:clamp(25px,10vw,160px);
 }
 
-#retirementScreen.active {
-    display: flex !important;
+.retirement-screen {
+    min-height:70vh;
 
-    flex-direction: column;
+    display:flex;
 
-    justify-content: center;
+    flex-direction:column;
 
-    padding-left: clamp(25px, 10vw, 160px);
+    justify-content:center;
 }
 
-#retirementScreen h1 {
-    max-width: 1000px;
+.retirement-screen h2 {
+    max-width:1000px;
 
-    font-size: clamp(55px, 10vw, 145px);
+    font-size:clamp(55px,9vw,140px);
 
-    font-weight: 950;
+    line-height:.8;
 
-    letter-spacing: -.08em;
+    font-weight:950;
 
-    line-height: .82;
+    letter-spacing:-.08em;
 }
 
-#retirementScreen h1::first-line {
-    color: var(--red);
-}
+.retirement-screen p {
+    max-width:650px;
 
-#retirementSummary {
-    max-width: 650px;
+    color:var(--silver);
 
-    margin: 30px 0;
-
-    color: var(--silver);
-
-    line-height: 1.8;
+    line-height:1.7;
 }
 
 .retirement-stats {
-    display: flex;
+    display:flex;
 
-    flex-wrap: wrap;
+    flex-wrap:wrap;
 
-    gap: 50px;
+    gap:50px;
 
-    margin: 35px 0;
+    margin:30px 0;
 }
 
-.retirement-stat strong {
-    display: block;
+.retirement-stats span {
+    display:block;
 
-    color: white;
+    color:var(--muted);
 
-    font-size: 35px;
+    font-size:8px;
+
+    font-weight:900;
+
+    letter-spacing:.15em;
 }
 
-.retirement-stat span {
-    color: var(--muted);
+.retirement-stats strong {
+    display:block;
 
-    font-size: 9px;
-    font-weight: 900;
+    margin-top:5px;
 
-    letter-spacing: .15em;
-    text-transform: uppercase;
-}
-
-
-/* =========================================================
-   LEGACY
-   ========================================================= */
-
-#legacyScreen {
-    width: 100%;
-    max-width: none;
-}
-
-.legacy-hero {
-    padding: 70px 0;
-
-    border-bottom: 1px solid var(--line);
-}
-
-.legacy-hero h1 {
-    margin: 0;
-
-    font-size: clamp(60px, 11vw, 150px);
-
-    font-weight: 950;
-
-    letter-spacing: -.08em;
-
-    line-height: .8;
-}
-
-.legacy-hero p {
-    margin-top: 25px;
-
-    color: var(--muted);
-}
-
-.legacy-stats {
-    display: grid;
-
-    grid-template-columns: repeat(4, 1fr);
-
-    margin-top: 40px;
-
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-}
-
-.legacy-stat {
-    padding: 25px;
-
-    border-right: 1px solid #222;
-}
-
-.legacy-stat:last-child {
-    border-right: 0;
-}
-
-.legacy-stat strong {
-    display: block;
-
-    margin-top: 8px;
-
-    color: white;
-
-    font-size: 32px;
+    font-size:34px;
 }
 
 
-/* =========================================================
-   CLUB CREATION
-   ========================================================= */
+/* LEGACY */
 
-.club-create {
-    max-width: 900px;
+.legacy-options {
+    display:grid;
 
-    margin: auto;
+    grid-template-columns:1fr 1fr;
+
+    gap:20px;
+
+    margin-top:45px;
 }
 
-.club-create h1 {
-    margin-bottom: 10px;
+.legacy-option {
+    padding:35px;
 
-    font-size: clamp(55px, 9vw, 120px);
+    border-top:2px solid var(--line);
 
-    font-weight: 950;
-
-    letter-spacing: -.08em;
-
-    line-height: .8;
+    background:#080d13;
 }
 
-.club-create > p {
-    max-width: 600px;
+.legacy-option:hover {
+    border-top-color:var(--blue);
+}
 
-    margin-bottom: 45px;
+.legacy-option h3 {
+    font-size:25px;
+}
 
-    color: var(--muted);
+.legacy-option p {
+    color:var(--muted);
 
-    line-height: 1.7;
+    line-height:1.6;
 }
 
 
-/* =========================================================
-   OWNER MODE
-   ========================================================= */
-
-#ownerScreen {
-    width: min(1500px, calc(100% - 48px));
-}
+/* OWNER */
 
 .owner-header {
-    padding-bottom: 30px;
+    display:flex;
 
-    border-bottom: 1px solid var(--line);
+    justify-content:space-between;
+
+    align-items:flex-end;
+
+    padding-bottom:30px;
+
+    border-bottom:1px solid var(--line);
 }
 
-.owner-header h1 {
-    margin: 0;
+#ownerClubName {
+    margin:5px 0;
 
-    font-size: clamp(55px, 9vw, 120px);
+    font-size:clamp(45px,7vw,90px);
 
-    font-weight: 950;
+    font-weight:950;
 
-    letter-spacing: -.08em;
-
-    line-height: .8;
+    letter-spacing:-.07em;
 }
 
-#ownerClubInfo {
-    margin-top: 15px;
-
-    color: var(--muted);
+#ownerClubMotto {
+    color:var(--silver);
 }
 
-#ownerMotto {
-    margin-top: 10px;
-
-    color: var(--silver);
-
-    font-style: italic;
+.owner-funds {
+    text-align:right;
 }
 
+.owner-funds span {
+    color:var(--muted);
 
-/* =========================================================
-   OWNER STATS
-   ========================================================= */
+    font-size:8px;
+
+    font-weight:900;
+}
+
+.owner-funds strong {
+    display:block;
+
+    color:var(--green);
+
+    font-size:28px;
+}
+
+.owner-stats {
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    margin:30px 0;
+
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+}
 
 .owner-grid {
-    display: grid;
+    display:grid;
 
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns:repeat(2,1fr);
 
-    margin: 35px 0;
-
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
+    gap:35px;
 }
 
-.owner-panel,
-.owner-card {
-    min-height: 110px;
-
-    padding: 22px 15px;
-
-    border-right: 1px solid #222;
-
-    border-radius: 0;
-
-    background: transparent;
+.owner-panel {
+    padding-bottom:25px;
 }
 
-.owner-panel:last-child,
-.owner-card:last-child {
-    border-right: 0;
-}
-
-.owner-panel h3,
-.owner-card h3 {
-    margin: 0 0 15px;
-
-    color: var(--muted);
-
-    font-size: 8px;
-    font-weight: 950;
-
-    letter-spacing: .15em;
-
-    text-transform: uppercase;
-}
-
-.owner-panel strong,
-.owner-card strong {
-    color: white;
-
-    font-size: 28px;
-    font-weight: 950;
-}
-
-
-/* =========================================================
-   OWNER STATUS
-   ========================================================= */
-
-.owner-status {
-    margin-top: 35px;
-
-    padding: 25px 0;
-
-    border-top: 1px solid var(--red);
-    border-bottom: 1px solid var(--line);
-
-    background: transparent;
-}
-
-.owner-status h2 {
-    margin: 0 0 15px;
-
-    font-size: 22px;
-}
-
-
-/* =========================================================
-   STARTING XI
-   ========================================================= */
-
-#startingXI {
-    margin-top: 20px;
-
-    border-top: 1px solid var(--line);
-}
-
+.squad-list > *,
 #startingXI > * {
-    padding: 14px 5px;
+    padding:13px 5px;
 
-    border-bottom: 1px solid #202020;
+    border-bottom:1px solid var(--line);
+}
+
+.upgrade-button {
+    width:100%;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-top:8px;
+
+    text-align:left;
+}
+
+.upgrade-button small {
+    display:block;
+
+    margin-top:4px;
+
+    color:var(--muted);
+}
+
+.upgrade-button strong {
+    color:var(--red);
 }
 
 
-/* =========================================================
-   DEVELOPMENT / OWNER BUTTONS
-   ========================================================= */
+/* SCOUT / FINANCE */
 
-#upgradeStadiumButton,
-#upgradeYouthButton,
-#upgradeTrainingButton,
-#hireStaffButton {
-    display: flex;
-
-    width: 100%;
-
-    justify-content: space-between;
-    align-items: center;
-
-    margin-top: 8px;
-
-    text-align: left;
-}
-
-#stadiumUpgradeCost,
-#youthUpgradeCost,
-#trainingUpgradeCost,
-#staffUpgradeCost {
-    color: var(--red);
-}
-
-
-/* =========================================================
-   SCOUTING
-   ========================================================= */
-
-#scoutScreen {
-    max-width: 1100px;
-}
-
-#scoutResults {
-    margin-top: 30px;
-
-    border-top: 1px solid var(--line);
-}
-
-#scoutResults > * {
-    padding: 22px 5px;
-
-    border-bottom: 1px solid #222;
-}
-
-
-/* =========================================================
-   FINANCES
-   ========================================================= */
-
-#financeScreen {
-    max-width: 1100px;
-}
-
-.finance-stat {
-    padding: 22px 5px;
-
-    border-bottom: 1px solid #222;
-}
-
-.finance-stat strong {
-    color: white;
-
-    font-size: 32px;
-}
-
-#financeFunds,
-#financeRevenue,
-#financeWages,
-#financeBalance {
-    color: var(--red);
-}
-
-
-/* =========================================================
-   FINANCE LOG
-   ========================================================= */
-
+#scoutResults,
 #financeLog {
-    margin-top: 25px;
+    margin-top:30px;
 
-    border-top: 1px solid var(--line);
+    border-top:1px solid var(--line);
 }
 
+#scoutResults > *,
 #financeLog > * {
-    padding: 15px 5px;
+    padding:20px 5px;
 
-    border-bottom: 1px solid #202020;
-
-    color: var(--silver);
+    border-bottom:1px solid var(--line);
 }
 
 
-/* =========================================================
-   SETTINGS
-   ========================================================= */
+/* TOAST */
 
-#settingsScreen {
-    max-width: 850px;
+#toast {
+    position:fixed;
+
+    right:25px;
+    bottom:25px;
+
+    z-index:10000;
+
+    width:min(390px,calc(100% - 30px));
+
+    padding:16px 20px;
+
+    border-left:3px solid var(--blue);
+
+    background:#0c131c;
+
+    color:white;
+
+    font-size:12px;
+
+    box-shadow:0 20px 50px rgba(0,0,0,.5);
+
+    animation:toastIn .25s ease;
 }
 
-.settings-row {
-    display: flex;
-
-    justify-content: space-between;
-    align-items: center;
-
-    gap: 20px;
-
-    padding: 22px 5px;
-
-    border-bottom: 1px solid #222;
-}
-
-
-/* =========================================================
-   CUTSCENE
-   ========================================================= */
-
-.cutscene-overlay,
-.cutscene {
-    position: fixed;
-    inset: 0;
-
-    z-index: 9999;
-
-    display: none;
-
-    place-items: center;
-
-    padding: 25px;
-
-    background:
-        radial-gradient(
-            circle at 50% 45%,
-            rgba(225,6,0,.12),
-            transparent 28%
-        ),
-        rgba(0,0,0,.96);
-
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-}
-
-.cutscene-overlay.active,
-.cutscene.active {
-    display: grid;
-}
-
-.cutscene-content {
-    width: min(950px, 100%);
-
-    padding: 60px 20px;
-
-    text-align: center;
-
-    border-top: 1px solid var(--red);
-    border-bottom: 1px solid #333;
-
-    animation: cutsceneIn .5s ease;
-}
-
-@keyframes cutsceneIn {
+@keyframes toastIn {
     from {
-        opacity: 0;
-        transform: translateY(20px);
+        opacity:0;
+        transform:translateX(30px);
     }
 
     to {
-        opacity: 1;
-        transform: translateY(0);
+        opacity:1;
+        transform:translateX(0);
     }
 }
 
-.cutscene-line {
-    width: 70px;
-    height: 2px;
 
-    margin: 0 auto 25px;
+/* RESPONSIVE */
 
-    background: var(--red);
-}
+@media(max-width:1100px) {
 
-#cutsceneLocation {
-    color: var(--red);
-
-    font-size: 9px;
-    font-weight: 950;
-
-    letter-spacing: .3em;
-    text-transform: uppercase;
-}
-
-#cutsceneTitle {
-    margin: 25px 0;
-
-    color: white;
-
-    font-size: clamp(45px, 9vw, 110px);
-
-    font-weight: 950;
-
-    letter-spacing: -.08em;
-
-    line-height: .82;
-}
-
-#cutsceneText {
-    max-width: 650px;
-
-    margin: 0 auto 35px;
-
-    color: var(--silver);
-
-    font-size: 15px;
-
-    line-height: 1.7;
-}
-
-#cutsceneContinue,
-#cutsceneNext {
-    min-width: 160px;
-
-    background: var(--red);
-
-    border-color: var(--red);
-}
-
-
-/* =========================================================
-   TOAST
-   ========================================================= */
-
-#toast {
-    position: fixed;
-
-    right: 25px;
-    bottom: 25px;
-
-    z-index: 10000;
-
-    max-width: 360px;
-
-    padding: 14px 18px;
-
-    border-left: 3px solid var(--red);
-
-    background: #101010;
-
-    color: white;
-
-    font-size: 12px;
-
-    box-shadow: 0 15px 40px rgba(0,0,0,.5);
-}
-
-
-/* =========================================================
-   ERROR / STATUS
-   ========================================================= */
-
-#startError,
-#clubError {
-    margin-top: 12px;
-
-    color: var(--red);
-
-    font-size: 12px;
-}
-
-
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
-
-@media (max-width: 1100px) {
-
-    .career-stats,
-    .stats-grid {
-        grid-template-columns: repeat(4, 1fr);
+    .career-stats {
+        grid-template-columns:repeat(3,1fr);
     }
 
-    .career-grid,
-    .career-layout {
-        grid-template-columns: 1fr;
+    .career-grid {
+        grid-template-columns:1fr;
     }
 
     .creation-layout {
-        grid-template-columns: 1fr;
+        grid-template-columns:1fr;
     }
 
     .creation-preview {
-        min-height: 250px;
-
-        border-left: 0;
-        border-top: 1px solid var(--line);
+        border-left:0;
+        border-top:1px solid var(--line);
     }
 
     .owner-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns:1fr;
     }
 
-    .owner-panel:nth-child(3) {
-        border-right: 0;
+    .awards-grid {
+        grid-template-columns:repeat(2,1fr);
     }
 }
 
 
-@media (max-width: 750px) {
+@media(max-width:700px) {
 
     .topbar {
-        height: 60px;
-
-        padding: 0 15px;
+        padding:0 14px;
     }
 
-    .top-stats,
     .topbar-right {
-        gap: 10px;
-    }
-
-    .top-stat-label {
-        display: none;
-    }
-
-    .logo-main {
-        font-size: 14px;
+        gap:10px;
     }
 
     .screen {
-        width: min(100% - 28px, 1400px);
+        width:calc(100% - 28px);
 
-        padding-top: 32px;
+        padding-top:30px;
     }
 
     #menuScreen {
-        width: 100%;
-
-        padding:
-            0
-            20px
-            50px;
+        padding-left:20px;
+        padding-right:20px;
     }
 
     .hero {
-        min-height: calc(100vh - 100px);
-
-        padding: 35px 0;
+        min-height:calc(100vh - 110px);
     }
 
-    .hero h1 {
-        font-size: clamp(52px, 16vw, 90px);
-    }
-
-    .hero p {
-        font-size: 14px;
-    }
-
-    .hero-actions,
     .menu-actions {
-        flex-direction: column;
+        flex-direction:column;
     }
 
-    .hero-actions button,
     .menu-actions button {
-        width: 100%;
+        width:100%;
+    }
+
+    .page-header {
+        flex-direction:column;
+
+        align-items:flex-start;
     }
 
     .career-header {
-        flex-direction: column;
+        flex-direction:column;
 
-        align-items: flex-start;
+        align-items:flex-start;
     }
 
-    .career-stats,
-    .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .career-rating {
+        text-align:left;
     }
 
-    .stat {
-        border-bottom: 1px solid #222;
+    .career-stats {
+        grid-template-columns:repeat(2,1fr);
     }
 
-    .owner-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .owner-panel:nth-child(2n) {
-        border-right: 0;
-    }
-
-    .legacy-stats {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .legacy-stat:nth-child(2n) {
-        border-right: 0;
-    }
-
-    .calendar-list > *,
     .calendar-day {
-        grid-template-columns: 90px 1fr;
+        grid-template-columns:70px 1fr;
     }
 
-    .match-scoreboard {
-        gap: 10px;
+    .calendar-day-badge {
+        display:none;
     }
 
-    #homeScore,
-    #awayScore {
-        font-size: 80px;
+    .match-stadium {
+        grid-template-columns:1fr;
+
+        gap:40px;
     }
 
-    .match-actions {
-        grid-template-columns: 1fr;
+    .match-controls {
+        grid-template-columns:1fr;
+    }
+
+    .contract-details,
+    .negotiation-box {
+        grid-template-columns:1fr;
+    }
+
+    .contract-details > div,
+    .negotiation-box > div {
+        border-right:0;
+        border-bottom:1px solid var(--line);
     }
 
     .transfer-layout {
-        grid-template-columns: 1fr;
+        grid-template-columns:1fr;
     }
 
-    .retirement-stats {
-        gap: 25px;
-    }
-}
-
-
-@media (max-width: 450px) {
-
-    .logo-sub {
-        display: none;
+    .awards-grid {
+        grid-template-columns:1fr;
     }
 
-    .topbar {
-        padding: 0 10px;
+    .award {
+        border-right:0;
+        border-bottom:1px solid var(--line);
     }
 
-    .career-stats,
-    .stats-grid {
-        grid-template-columns: 1fr 1fr;
+    .legacy-options {
+        grid-template-columns:1fr;
     }
 
-    .stat {
-        min-height: 85px;
+    .owner-header {
+        flex-direction:column;
 
-        padding: 14px 10px;
+        align-items:flex-start;
     }
 
-    .stat-value {
-        font-size: 24px;
+    .owner-funds {
+        text-align:left;
     }
 
-    .legacy-stats {
-        grid-template-columns: 1fr;
+    .owner-stats {
+        grid-template-columns:repeat(2,1fr);
     }
 
-    .legacy-stat {
-        border-right: 0;
-
-        border-bottom: 1px solid #222;
+    .action-strip {
+        flex-direction:column;
     }
 
-    .owner-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .owner-panel,
-    .owner-card {
-        border-right: 0;
-
-        border-bottom: 1px solid #222;
-    }
-
-    .calendar-list > *,
-    .calendar-day {
-        grid-template-columns: 75px 1fr;
-    }
-
-    #homeScore,
-    #awayScore {
-        font-size: 60px;
-    }
-
-    #matchCompetition {
-        font-size: 8px;
-    }
-
-    #cutsceneTitle {
-        font-size: 48px;
-    }
-
-    .cutscene-content {
-        padding: 40px 10px;
+    .action-strip button {
+        width:100%;
     }
 }
 
 
-/* =========================================================
-   REDUCED MOTION
-   ========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
+@media(prefers-reduced-motion:reduce) {
 
     *,
     *::before,
     *::after {
-        scroll-behavior: auto !important;
-
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-
-        transition-duration: .01ms !important;
+        animation:none !important;
+        transition:none !important;
     }
 }
